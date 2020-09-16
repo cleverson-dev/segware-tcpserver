@@ -1,3 +1,5 @@
+package com.segware;
+
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 
