@@ -1,6 +1,7 @@
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class SegwareTCPServer {
     public static void main( String[] args ) throws IOException {
         IoAcceptor acceptor = new NioSocketAcceptor();
 
+        acceptor.getFilterChain().addLast("logger", new LoggingFilter());
         acceptor.getFilterChain().addLast("string-codec", new ProtocolCodecFilter(
                 new TextLineCodecFactory(Charset.forName("UTF-8"))));
 
