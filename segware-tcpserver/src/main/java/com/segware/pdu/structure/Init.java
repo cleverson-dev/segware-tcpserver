@@ -3,7 +3,7 @@ package com.segware.pdu.structure;
 import java.util.Objects;
 
 public class Init {
-    private static final byte INIT_VALUE = 0x0A;
+    private static final byte INIT_VALUE = (byte) 0x0A;
 
     private static final Init init = new Init();
 

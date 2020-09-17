@@ -11,6 +11,8 @@ public class PDUEncoder extends ProtocolEncoderAdapter {
         ProtocolDataUnit pdu = (ProtocolDataUnit) o;
         IoBuffer ioBuffer = IoBuffer.allocate(pdu.getLength(), false);
         encodePDU(ioBuffer, pdu);
+        ioBuffer.flip();
+        protocolEncoderOutput.write(ioBuffer);
     }
 
     private void encodePDU(IoBuffer ioBuffer, ProtocolDataUnit pdu) {

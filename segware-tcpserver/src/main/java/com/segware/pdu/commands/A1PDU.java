@@ -7,13 +7,11 @@ import org.apache.mina.core.session.IoSession;
 
 public class A1PDU extends ProtocolDataUnit {
     public A1PDU() {
-        super(Frame.ACK);
-        this.data = new Data(new byte[0]);
+        super(Frame.ACK, new Data(new byte[0]));
     }
 
     public A1PDU(Data data) {
-        super(Frame.ACK);
-        this.data = data;
+        super(Frame.ACK, data);
     }
 
     @Override

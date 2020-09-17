@@ -18,10 +18,13 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
             Bytes bytes = decodeBytes(ioBuffer);
             Frame frame = decodeFrame(ioBuffer);
             Data data = decodeData(ioBuffer, bytes);
-            CRC8 crc = decodeCRC(ioBuffer);
+            CRC8 crc8 = decodeCRC(ioBuffer);
             decodeEnd(ioBuffer);
 
-            protocolDecoderOutput.write(frame.getPDUInstance(data));
+            ProtocolDataUnit pdu = frame.getPDUInstance(data);
+            validateCRC8(crc8, pdu.getCrc());
+
+            protocolDecoderOutput.write(pdu);
 
             return true;
         } else {
@@ -67,7 +70,6 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
         return bytes.asInt() - ProtocolDataUnit.FIXED_FIELDS_LENGTH;
     }
 
-    //TODO implement crc validation
     private CRC8 decodeCRC(IoBuffer ioBuffer) {
         return new CRC8(ioBuffer.get());
     }
@@ -77,5 +79,12 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
             return;
         else
             throw new IOException("Byte assumed as END hasn't a recognizable value.");
+    }
+
+    private void validateCRC8(CRC8 receveidCRC8, CRC8 expectedCRC8) throws IOException {
+        if (receveidCRC8.equals(expectedCRC8))
+            return;
+        else
+            throw new IOException("Byte assumed as CRC hasn't a valid value.");
     }
 }

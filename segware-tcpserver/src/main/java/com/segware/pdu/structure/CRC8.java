@@ -13,6 +13,11 @@ public class CRC8 {
         return this.crc;
     }
 
+    //TODO implement CRC8 calculation
+    public static CRC8 calculate(Bytes bytes, Frame frame, Data data) {
+        return new CRC8((byte) 0xDC);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

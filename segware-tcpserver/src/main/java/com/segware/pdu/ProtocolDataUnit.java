@@ -16,31 +16,13 @@ public abstract class ProtocolDataUnit {
     protected CRC8 crc;
     protected End end;
 
-    private ProtocolDataUnit() {
-        this.init = Init.getInstance();
-        this.end = End.getInstance();
-    }
-
-    protected ProtocolDataUnit(Frame frame) {
-        this();
-
-        this.frame = frame;
-        this.bytes = Bytes.fromInt(FIXED_FIELDS_LENGTH);
-        this.calculateCRC();
-    }
-
     protected ProtocolDataUnit(Frame frame, Data data) {
-        this();
-
+        this.init = Init.getInstance();
         this.frame = frame;
         this.data = data;
         this.bytes = Bytes.fromInt(FIXED_FIELDS_LENGTH + data.getLength());
-        this.calculateCRC();
-    }
-
-    //TODO
-    private CRC8 calculateCRC() {
-        return new CRC8((byte) 0);
+        this.crc = CRC8.calculate(bytes, frame, data);
+        this.end = End.getInstance();
     }
 
     private int fillData(byte[] data, byte[] pdu, int index) {
