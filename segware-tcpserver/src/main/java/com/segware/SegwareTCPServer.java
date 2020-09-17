@@ -1,3 +1,6 @@
+package com.segware;
+
+import com.segware.pdu.codec.PDUCodecFactory;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
@@ -16,8 +19,7 @@ public class SegwareTCPServer {
         IoAcceptor acceptor = new NioSocketAcceptor();
 
         acceptor.getFilterChain().addLast("logger", new LoggingFilter());
-        acceptor.getFilterChain().addLast("string-codec", new ProtocolCodecFilter(
-                new TextLineCodecFactory(Charset.forName("UTF-8"))));
+        acceptor.getFilterChain().addLast("pdu-codec", new ProtocolCodecFilter(new PDUCodecFactory()));
 
         acceptor.setHandler(new ServerHandler());
         acceptor.bind(new InetSocketAddress(PORT));
