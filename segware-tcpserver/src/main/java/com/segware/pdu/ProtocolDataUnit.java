@@ -43,20 +43,6 @@ public abstract class ProtocolDataUnit {
         return new CRC8((byte) 0);
     }
 
-    public byte[] toByteArray() {
-        byte[] byteArray = new byte[bytes.asInt()];
-
-        int index = 0;
-        byteArray[index++] = init.toByte();
-        byteArray[index++] = bytes.toByte();
-        byteArray[index++] = frame.toByte();
-        index = fillData(data.toByteArray(), byteArray, index);
-        byteArray[index++] = crc.toByte();
-        byteArray[index++] = end.toByte();
-
-        return byteArray;
-    }
-
     private int fillData(byte[] data, byte[] pdu, int index) {
         System.arraycopy(data, 0, pdu, index, data.length);
         return index + data.length;

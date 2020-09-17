@@ -32,7 +32,7 @@ public class ServerHandlerTest {
         IoSession ioSession = getMockedIoSession();
         ProtocolDataUnit pdu_0xA1 = new A1PDU(Data.fromString("Hello world!"));
 
-        serverHandler.messageReceived(ioSession, pdu_0xA1.toByteArray());
+        serverHandler.messageReceived(ioSession, pdu_0xA1);
 
         ProtocolDataUnit pdu_0xA0 = new A0PDU();
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
