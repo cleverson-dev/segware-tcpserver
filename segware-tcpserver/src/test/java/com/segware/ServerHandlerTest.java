@@ -2,8 +2,10 @@ package com.segware;
 
 import com.segware.pdu.commands.A0PDU;
 import com.segware.pdu.commands.A1PDU;
+import com.segware.pdu.commands.A2PDU;
 import com.segware.pdu.structure.Data;
 import com.segware.pdu.ProtocolDataUnit;
+import com.segware.pdu.structure.data.*;
 import org.apache.mina.core.filterchain.IoFilterChain;
 import org.apache.mina.core.future.CloseFuture;
 import org.apache.mina.core.future.ReadFuture;
@@ -33,6 +35,25 @@ public class ServerHandlerTest {
         ProtocolDataUnit pdu_0xA1 = new A1PDU(Data.fromString("Hello world!"));
 
         serverHandler.messageReceived(ioSession, pdu_0xA1);
+
+        ProtocolDataUnit pdu_0xA0 = new A0PDU();
+        ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
+        assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
+    }
+
+    @Test
+    public void shouldReturnAckWhenReceiveUserInf() {
+        ServerHandler serverHandler = new ServerHandler();
+        IoSession ioSession = getMockedIoSession();
+
+        UserInformation userInformation = new UserInformation(new Name("Michel Reips"));
+        userInformation.setAge(new Age(32));
+        userInformation.setWeight(new Weight(122));
+        userInformation.setHeight(new Height(195));
+
+        ProtocolDataUnit pdu_0xA2 = new A2PDU(userInformation);
+
+        serverHandler.messageReceived(ioSession, pdu_0xA2);
 
         ProtocolDataUnit pdu_0xA0 = new A0PDU();
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();

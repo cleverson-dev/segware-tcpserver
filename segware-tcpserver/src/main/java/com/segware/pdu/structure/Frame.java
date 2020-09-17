@@ -3,6 +3,7 @@ package com.segware.pdu.structure;
 import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.commands.A0PDU;
 import com.segware.pdu.commands.A1PDU;
+import com.segware.pdu.commands.A2PDU;
 
 public enum Frame {
     ACK((byte) 0xA0) {
@@ -20,7 +21,7 @@ public enum Frame {
     USER_INFORMATION((byte) 0xA2) {
         @Override
         public ProtocolDataUnit getPDUInstance(Data data) {
-            return null;
+            return new A2PDU(data);
         }
     },
     GET_CURRENT_DATE_TIME((byte) 0xA3) {

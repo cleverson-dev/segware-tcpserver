@@ -13,6 +13,7 @@ public class Bytes {
         return new Bytes((byte) pduLength);
     }
 
+    // TODO: convert numbers grater than 127 to int
     public int asInt() {
         return bytes;
     }
