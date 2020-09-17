@@ -21,6 +21,8 @@ import org.apache.mina.core.write.WriteRequestQueue;
 import org.junit.Test;
 
 import java.net.SocketAddress;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.*;
@@ -58,6 +60,28 @@ public class ServerHandlerTest {
         ProtocolDataUnit pdu_0xA0 = new A0PDU();
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
         assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
+    }
+
+    @Test
+    public void shouldReturnDateTimeWhenReceiveDateTimeRequest() {
+        ServerHandler serverHandler = new ServerHandler();
+        IoSession ioSession = getMockedIoSession();
+        ProtocolDataUnit requestPDU_0xA3 = new A3PDU(new Data("America/Sao_Paulo".getBytes()));
+
+        serverHandler.messageReceived(ioSession, requestPDU_0xA3);
+
+        ZoneId americaSaoPaulo = ZoneId.of("America/Sao_Paulo");
+        ZonedDateTime nowAmericaSaoPaulo = ZonedDateTime.now(americaSaoPaulo);
+        DateTime dateTime = new DateTime(nowAmericaSaoPaulo);
+
+        ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
+        ProtocolDataUnit responsePDU_0xA3 = new A3PDU(dateTime);
+
+        assertThat(writtenPdu.getInit(), is(equalTo(responsePDU_0xA3.getInit())));
+        assertThat(writtenPdu.getBytes(), is(equalTo(responsePDU_0xA3.getBytes())));
+        assertThat(writtenPdu.getFrame(), is(equalTo(responsePDU_0xA3.getFrame())));
+        assertThat(writtenPdu.getCrc(), is(equalTo(responsePDU_0xA3.getCrc())));
+        assertThat(writtenPdu.getEnd(), is(equalTo(responsePDU_0xA3.getEnd())));
     }
 
     private IoSession getMockedIoSession() {
