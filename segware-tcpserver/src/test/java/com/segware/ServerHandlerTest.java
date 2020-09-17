@@ -39,6 +39,25 @@ public class ServerHandlerTest {
         assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
     }
 
+    @Test
+    public void shouldReturnAckWhenReceiveUserInf() {
+        ServerHandler serverHandler = new ServerHandler();
+        IoSession ioSession = getMockedIoSession();
+
+        UserInformation userInformation = new UserInformation("Michel Reips");
+        userInformation.setAge(32);
+        userInformation.setWeight(122);
+        userInformation.setHight(195);
+
+        ProtocolDataUnit pdu_0xA2 = new A2PDU(userInformation);
+
+        serverHandler.messageReceived(ioSession, pdu_0xA2);
+
+        ProtocolDataUnit pdu_0xA0 = new A0PDU();
+        ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
+        assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
+    }
+
     private IoSession getMockedIoSession() {
         return new IoSession() {
             private ProtocolDataUnit pdu;
