@@ -1,23 +1,32 @@
 package com.segware.pdu.structure;
 
+import com.segware.pdu.ProtocolDataUnit;
+import com.segware.pdu.commands.A0PDU;
+import com.segware.pdu.commands.A1PDU;
+
 public enum Frame {
-    ACK((byte) 0xA0),
+    ACK((byte) 0xA0) {
+        @Override
+        public ProtocolDataUnit getPDUInstance(Data data) {
+            return new A0PDU(data);
+        }
+    },
     TEXT_MESSAGE((byte) 0xA1) {
         @Override
-        public boolean hasData() {
-            return true;
+        public ProtocolDataUnit getPDUInstance(Data data) {
+            return new A1PDU(data);
         }
     },
     USER_INFORMATION((byte) 0xA2) {
         @Override
-        public boolean hasData() {
-            return true;
+        public ProtocolDataUnit getPDUInstance(Data data) {
+            return null;
         }
     },
     GET_CURRENT_DATE_TIME((byte) 0xA3) {
         @Override
-        public boolean hasData() {
-            return true;
+        public ProtocolDataUnit getPDUInstance(Data data) {
+            return null;
         }
     },
     ;
@@ -28,13 +37,7 @@ public enum Frame {
         this.code = code;
     }
 
-    public boolean hasData() {
-        return false;
-    }
-
-    public byte getCode() {
-        return code;
-    }
+    public abstract ProtocolDataUnit getPDUInstance(Data data);
 
     public byte toByte() {
         return code;

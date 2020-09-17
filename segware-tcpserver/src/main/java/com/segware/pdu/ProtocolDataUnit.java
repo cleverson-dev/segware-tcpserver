@@ -1,19 +1,20 @@
 package com.segware.pdu;
 
 import com.segware.pdu.structure.*;
+import org.apache.mina.core.session.IoSession;
 
 import java.util.Objects;
 
-public class ProtocolDataUnit {
+public abstract class ProtocolDataUnit {
     public static final int FIXED_FIELDS_LENGTH = 5;
     public static final int HEADER_FIELDS_LENGTH = 3;
 
-    private Init init;
-    private Bytes bytes;
-    private Frame frame;
-    private Data data;
-    private CRC8 crc;
-    private End end;
+    protected Init init;
+    protected Bytes bytes;
+    protected Frame frame;
+    protected Data data;
+    protected CRC8 crc;
+    protected End end;
 
     private ProtocolDataUnit() {
         this.init = Init.getInstance();
@@ -42,18 +43,6 @@ public class ProtocolDataUnit {
         return new CRC8((byte) 0);
     }
 
-    public static ProtocolDataUnit withoutData(Frame frame) {
-        if (frame.hasData())
-            throw new RuntimeException("This PDU can't be instantiated without data. " +
-                    "Use the proper constructor.");
-
-        return new ProtocolDataUnit(frame);
-    }
-
-    public static ProtocolDataUnit withData(Frame frame, Data data) {
-        return new ProtocolDataUnit(frame, data);
-    }
-
     public byte[] toByteArray() {
         byte[] byteArray = new byte[bytes.asInt()];
 
@@ -72,6 +61,8 @@ public class ProtocolDataUnit {
         System.arraycopy(data, 0, pdu, index, data.length);
         return index + data.length;
     }
+
+    public abstract void execute(IoSession session);
 
     public int getLength() {
         return this.bytes.asInt();

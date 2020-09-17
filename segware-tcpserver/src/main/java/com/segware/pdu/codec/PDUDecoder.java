@@ -17,17 +17,11 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
             decodeInit(ioBuffer);
             Bytes bytes = decodeBytes(ioBuffer);
             Frame frame = decodeFrame(ioBuffer);
-
-            Data data = null;
-            if (frame.hasData()) {
-                data = decodeData(ioBuffer, bytes);
-            }
-
+            Data data = decodeData(ioBuffer, bytes);
             CRC8 crc = decodeCRC(ioBuffer);
             decodeEnd(ioBuffer);
 
-            protocolDecoderOutput.write(frame.hasData() ? ProtocolDataUnit.withData(frame, data) :
-                    ProtocolDataUnit.withoutData(frame));
+            protocolDecoderOutput.write(frame.getPDUInstance(data));
 
             return true;
         } else {
@@ -73,6 +67,7 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
         return bytes.asInt() - ProtocolDataUnit.FIXED_FIELDS_LENGTH;
     }
 
+    //TODO implement crc validation
     private CRC8 decodeCRC(IoBuffer ioBuffer) {
         return new CRC8(ioBuffer.get());
     }
