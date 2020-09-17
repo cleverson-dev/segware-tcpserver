@@ -1,4 +1,4 @@
-package com.segware.pdu;
+package com.segware.pdu.structure;
 
 public enum Frame {
     ACK((byte) 0xA0),
@@ -38,5 +38,13 @@ public enum Frame {
 
     public byte toByte() {
         return code;
+    }
+
+    public static Frame fromByte(byte frame) {
+        for (Frame iteratorFrame : Frame.values()) {
+            if (iteratorFrame.code == frame)
+                return iteratorFrame;
+        }
+        throw new IllegalArgumentException("The informed value is not a recognizable FRAME value.");
     }
 }

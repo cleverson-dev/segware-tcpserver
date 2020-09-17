@@ -1,8 +1,8 @@
 package com.segware;
 
-import com.segware.pdu.A0PDU;
-import com.segware.pdu.A1PDU;
-import com.segware.pdu.Data;
+import com.segware.pdu.commands.A0PDU;
+import com.segware.pdu.commands.A1PDU;
+import com.segware.pdu.structure.Data;
 import com.segware.pdu.ProtocolDataUnit;
 import org.apache.mina.core.filterchain.IoFilterChain;
 import org.apache.mina.core.future.CloseFuture;
