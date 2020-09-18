@@ -1,10 +1,10 @@
 package com.segware;
 
+import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.commands.A0PDU;
 import com.segware.pdu.commands.A1PDU;
 import com.segware.pdu.commands.A2PDU;
-import com.segware.pdu.structure.Data;
-import com.segware.pdu.ProtocolDataUnit;
+import com.segware.pdu.structure.*;
 import com.segware.pdu.structure.data.*;
 import org.apache.mina.core.filterchain.IoFilterChain;
 import org.apache.mina.core.future.CloseFuture;
@@ -21,12 +21,11 @@ import org.apache.mina.core.write.WriteRequestQueue;
 import org.junit.Test;
 
 import java.net.SocketAddress;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.*;
 
 public class ServerHandlerTest {
 
@@ -69,19 +68,23 @@ public class ServerHandlerTest {
         ProtocolDataUnit requestPDU_0xA3 = new A3PDU(new Data("America/Sao_Paulo".getBytes()));
 
         serverHandler.messageReceived(ioSession, requestPDU_0xA3);
-
-        ZoneId americaSaoPaulo = ZoneId.of("America/Sao_Paulo");
-        ZonedDateTime nowAmericaSaoPaulo = ZonedDateTime.now(americaSaoPaulo);
-        DateTime dateTime = new DateTime(nowAmericaSaoPaulo);
-
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
-        ProtocolDataUnit responsePDU_0xA3 = new A3PDU(dateTime);
 
-        assertThat(writtenPdu.getInit(), is(equalTo(responsePDU_0xA3.getInit())));
-        assertThat(writtenPdu.getBytes(), is(equalTo(responsePDU_0xA3.getBytes())));
-        assertThat(writtenPdu.getFrame(), is(equalTo(responsePDU_0xA3.getFrame())));
-        assertThat(writtenPdu.getCrc(), is(equalTo(responsePDU_0xA3.getCrc())));
-        assertThat(writtenPdu.getEnd(), is(equalTo(responsePDU_0xA3.getEnd())));
+        Data writtenPduData = writtenPdu.getData();
+        DateTime dateTime = new DateTime(writtenPduData);
+        assertThat(dateTime.getDay(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
+        assertThat(dateTime.getMonth(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
+        assertThat(dateTime.getYear(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(2100))));
+        assertThat(dateTime.getHour(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(24))));
+        assertThat(dateTime.getMinute(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(59))));
+        assertThat(dateTime.getSecond(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(59))));
+
+        assertThat(writtenPdu.getInit(), is(equalTo(Init.getInstance())));
+        assertThat(writtenPdu.getBytes(), is(equalTo(DateTime.LENGTH)));
+        assertThat(writtenPdu.getFrame(), is(equalTo(Frame.GET_CURRENT_DATE_TIME)));
+        assertThat(writtenPdu.getCrc(), is(equalTo(CRC8.calculate(DateTime.LENGTH,
+                Frame.GET_CURRENT_DATE_TIME, writtenPduData))));
+        assertThat(writtenPdu.getEnd(), is(equalTo(End.getInstance())));
     }
 
     private IoSession getMockedIoSession() {
