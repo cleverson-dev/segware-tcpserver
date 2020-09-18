@@ -5,11 +5,15 @@ import com.segware.pdu.structure.Data;
 import com.segware.pdu.structure.Frame;
 import com.segware.pdu.structure.data.DateTime;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public class A3PDU extends ProtocolDataUnit {
+    private Logger minaLogger = LoggerFactory.getLogger("org.apache.mina");
+
     private boolean isRequest;
     private DateTime dateTime;
 
@@ -43,6 +47,7 @@ public class A3PDU extends ProtocolDataUnit {
 
             A3PDU a3PDUResponse = A3PDU.getResponseInstance(new DateTime(zonedDateTime));
             session.write(a3PDUResponse);
+            minaLogger.info("PDU RESPONSE: " + a3PDUResponse.toString());
         } else {
             throw new IllegalStateException("Only a request can be executed, not a response.");
         }

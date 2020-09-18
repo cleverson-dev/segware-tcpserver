@@ -5,8 +5,12 @@ import com.segware.pdu.structure.Data;
 import com.segware.pdu.structure.Frame;
 import com.segware.pdu.structure.data.UserInformation;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class A2PDU extends ProtocolDataUnit {
+    private Logger minaLogger = LoggerFactory.getLogger("org.apache.mina");
+
     private UserInformation userInformation;
 
     public A2PDU(UserInformation data) {
@@ -21,6 +25,8 @@ public class A2PDU extends ProtocolDataUnit {
 
     @Override
     public void execute(IoSession session) {
-        session.write(new A0PDU());
+        A0PDU a0PDUResponse = new A0PDU();
+        session.write(a0PDUResponse);
+        minaLogger.info("PDU RESPONSE: " + a0PDUResponse.toString());
     }
 }

@@ -52,4 +52,11 @@ public enum Frame {
         }
         throw new IllegalArgumentException("The informed value is not a recognizable FRAME value.");
     }
+
+    @Override
+    public String toString() {
+        return "Frame{" +
+                "code=" + String.format("0x%02X", code) +
+                '}';
+    }
 }

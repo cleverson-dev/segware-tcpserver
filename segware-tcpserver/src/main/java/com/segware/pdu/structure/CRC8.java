@@ -34,7 +34,7 @@ public class CRC8 {
     @Override
     public String toString() {
         return "CRC8{" +
-                "crc=" + crc +
+                "crc=" + String.format("0x%02X", crc) +
                 '}';
     }
 }

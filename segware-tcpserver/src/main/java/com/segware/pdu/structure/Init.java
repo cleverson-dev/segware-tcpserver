@@ -35,7 +35,7 @@ public class Init {
     @Override
     public String toString() {
         return "Init{" +
-                "value=" + INIT_VALUE +
+                "value=" + String.format("0x%02X", INIT_VALUE) +
                 '}';
     }
 }
