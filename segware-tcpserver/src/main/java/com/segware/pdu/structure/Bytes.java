@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Bytes {
     private byte bytes;
 
+    // TODO: constructor always with int to avoid problems with the signal of the type
     public Bytes(byte bytes) {
         this.bytes = bytes;
     }

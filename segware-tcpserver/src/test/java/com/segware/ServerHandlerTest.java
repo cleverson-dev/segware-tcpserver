@@ -1,10 +1,11 @@
 package com.segware;
 
+import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.commands.A0PDU;
 import com.segware.pdu.commands.A1PDU;
 import com.segware.pdu.commands.A2PDU;
-import com.segware.pdu.structure.Data;
-import com.segware.pdu.ProtocolDataUnit;
+import com.segware.pdu.commands.A3PDU;
+import com.segware.pdu.structure.*;
 import com.segware.pdu.structure.data.*;
 import org.apache.mina.core.filterchain.IoFilterChain;
 import org.apache.mina.core.future.CloseFuture;
@@ -23,8 +24,9 @@ import org.junit.Test;
 import java.net.SocketAddress;
 import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.*;
 
 public class ServerHandlerTest {
 
@@ -58,6 +60,33 @@ public class ServerHandlerTest {
         ProtocolDataUnit pdu_0xA0 = new A0PDU();
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
         assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
+    }
+
+    @Test
+    public void shouldReturnDateTimeWhenReceiveDateTimeRequest() {
+        ServerHandler serverHandler = new ServerHandler();
+        IoSession ioSession = getMockedIoSession();
+        ProtocolDataUnit requestPDU_0xA3 = A3PDU.getRequestInstance(new Data("America/Sao_Paulo".getBytes()));
+
+        serverHandler.messageReceived(ioSession, requestPDU_0xA3);
+        ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
+
+        Data writtenPduData = writtenPdu.getData();
+        DateTime dateTime = DateTime.fromData(writtenPduData);
+        assertThat(dateTime.getDay().asInt(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
+        assertThat(dateTime.getMonth().asInt(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
+        assertThat(dateTime.getYear().asInt(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(99))));
+        assertThat(dateTime.getHour().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(23))));
+        assertThat(dateTime.getMinute().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
+        assertThat(dateTime.getSecond().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
+
+        assertThat(writtenPdu.getInit(), is(equalTo(Init.getInstance())));
+        assertThat(writtenPdu.getBytes().asInt(), is(equalTo(ProtocolDataUnit.FIXED_FIELDS_LENGTH + DateTime.LENGTH)));
+        assertThat(writtenPdu.getFrame(), is(equalTo(Frame.GET_CURRENT_DATE_TIME)));
+        // TODO: Remove cast when the constructor type changes
+        assertThat(writtenPdu.getCrc(), is(equalTo(CRC8.calculate(new Bytes((byte) DateTime.LENGTH),
+                Frame.GET_CURRENT_DATE_TIME, writtenPduData))));
+        assertThat(writtenPdu.getEnd(), is(equalTo(End.getInstance())));
     }
 
     private IoSession getMockedIoSession() {
