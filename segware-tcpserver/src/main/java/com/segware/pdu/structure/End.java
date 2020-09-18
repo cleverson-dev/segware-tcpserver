@@ -35,7 +35,7 @@ public class End {
     @Override
     public String toString() {
         return "End{" +
-                "value=" + END_VALUE +
+                "value=" + String.format("0x%02X", END_VALUE) +
                 '}';
     }
 }

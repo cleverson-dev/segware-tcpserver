@@ -37,7 +37,17 @@ public class Data {
     @Override
     public String toString() {
         return "Data{" +
-                "data=" + Arrays.toString(data) +
+                "data=" + toHexString(data) +
                 '}';
+    }
+
+    private String toHexString(byte[] data) {
+        StringBuffer hexString = new StringBuffer();
+
+        hexString.append(String.format("0x%02X", data[0]));
+        for (int index = 1; index < data.length; index++)
+            hexString.append(String.format(", 0x%02X", data[index]));
+
+        return hexString.toString();
     }
 }

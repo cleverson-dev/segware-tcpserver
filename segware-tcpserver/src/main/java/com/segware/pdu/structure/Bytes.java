@@ -39,7 +39,7 @@ public class Bytes {
     @Override
     public String toString() {
         return "Bytes{" +
-                "bytes=" + bytes +
+                "bytes=" + String.format("0x%02X", bytes) +
                 '}';
     }
 }

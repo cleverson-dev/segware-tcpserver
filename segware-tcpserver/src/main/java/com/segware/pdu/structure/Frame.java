@@ -56,7 +56,7 @@ public enum Frame {
     @Override
     public String toString() {
         return "Frame{" +
-                "code=" + code +
+                "code=" + String.format("0x%02X", code) +
                 '}';
     }
 }
