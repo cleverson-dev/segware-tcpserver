@@ -4,6 +4,7 @@ import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.commands.A0PDU;
 import com.segware.pdu.commands.A1PDU;
 import com.segware.pdu.commands.A2PDU;
+import com.segware.pdu.commands.A3PDU;
 import com.segware.pdu.structure.*;
 import com.segware.pdu.structure.data.*;
 import org.apache.mina.core.filterchain.IoFilterChain;
@@ -65,24 +66,25 @@ public class ServerHandlerTest {
     public void shouldReturnDateTimeWhenReceiveDateTimeRequest() {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
-        ProtocolDataUnit requestPDU_0xA3 = new A3PDU(new Data("America/Sao_Paulo".getBytes()));
+        ProtocolDataUnit requestPDU_0xA3 = A3PDU.getRequestInstance(new Data("America/Sao_Paulo".getBytes()));
 
         serverHandler.messageReceived(ioSession, requestPDU_0xA3);
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
 
         Data writtenPduData = writtenPdu.getData();
-        DateTime dateTime = new DateTime(writtenPduData);
-        assertThat(dateTime.getDay(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
-        assertThat(dateTime.getMonth(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
-        assertThat(dateTime.getYear(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(2100))));
-        assertThat(dateTime.getHour(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(24))));
-        assertThat(dateTime.getMinute(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(59))));
-        assertThat(dateTime.getSecond(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(59))));
+        DateTime dateTime = DateTime.fromData(writtenPduData);
+        assertThat(dateTime.getDay().asInt(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
+        assertThat(dateTime.getMonth().asInt(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(31))));
+        assertThat(dateTime.getYear().asInt(), is(both(greaterThanOrEqualTo(1)).and(lessThanOrEqualTo(99))));
+        assertThat(dateTime.getHour().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(23))));
+        assertThat(dateTime.getMinute().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
+        assertThat(dateTime.getSecond().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
 
         assertThat(writtenPdu.getInit(), is(equalTo(Init.getInstance())));
-        assertThat(writtenPdu.getBytes(), is(equalTo(DateTime.LENGTH)));
+        assertThat(writtenPdu.getBytes().asInt(), is(equalTo(ProtocolDataUnit.FIXED_FIELDS_LENGTH + DateTime.LENGTH)));
         assertThat(writtenPdu.getFrame(), is(equalTo(Frame.GET_CURRENT_DATE_TIME)));
-        assertThat(writtenPdu.getCrc(), is(equalTo(CRC8.calculate(DateTime.LENGTH,
+        // TODO: Remove cast when the constructor type changes
+        assertThat(writtenPdu.getCrc(), is(equalTo(CRC8.calculate(new Bytes((byte) DateTime.LENGTH),
                 Frame.GET_CURRENT_DATE_TIME, writtenPduData))));
         assertThat(writtenPdu.getEnd(), is(equalTo(End.getInstance())));
     }
