@@ -34,6 +34,7 @@
         <junit.platform.version>1.5.2</junit.platform.version>
         <mockito.version>1.10.19</mockito.version>
         <h2.version>1.4.200</h2.version>
+        <hibernate.version>5.4.21.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -89,6 +90,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
 
     </dependencies>
