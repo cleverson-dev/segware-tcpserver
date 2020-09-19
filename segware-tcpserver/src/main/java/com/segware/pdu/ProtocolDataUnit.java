@@ -21,7 +21,7 @@ public abstract class ProtocolDataUnit {
         this.frame = frame;
         this.data = data;
         this.bytes = Bytes.fromInt(FIXED_FIELDS_LENGTH + data.getLength());
-        this.crc = CRC8.calculate(bytes, frame, data);
+        this.crc = CRC8.calculateForPDU(bytes, frame, data);
         this.end = End.getInstance();
     }
 
