@@ -18,12 +18,12 @@ public class A3PDU extends ProtocolDataUnit {
     private DateTime dateTime;
 
     private A3PDU(Data data) {
-        super(Frame.GET_CURRENT_DATE_TIME, data);
+        super(Frame.CURRENT_DATE_TIME, data);
         isRequest = true;
     }
 
     private A3PDU(Data data, DateTime dateTime) {
-        super(Frame.GET_CURRENT_DATE_TIME, data);
+        super(Frame.CURRENT_DATE_TIME, data);
         this.dateTime = dateTime;
     }
 

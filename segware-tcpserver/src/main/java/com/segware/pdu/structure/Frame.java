@@ -25,7 +25,7 @@ public enum Frame {
             return new A2PDU(data);
         }
     },
-    GET_CURRENT_DATE_TIME((byte) 0xA3) {
+    CURRENT_DATE_TIME((byte) 0xA3) {
         @Override
         public ProtocolDataUnit getPDUInstance(Data data) {
             return A3PDU.getRequestInstance(data);
