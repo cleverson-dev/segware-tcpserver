@@ -4,6 +4,8 @@ import com.segware.pdu.structure.Data;
 
 import java.util.Objects;
 
+import static com.segware.pdu.PDUUtils.asInt;
+
 public class UserInformation {
     public static final int FIXED_FIELDS_LENGTH = 4;
 
@@ -14,6 +16,10 @@ public class UserInformation {
 
     public UserInformation(Name name) {
         this.name = name;
+    }
+
+    public Name getName() {
+        return name;
     }
 
     public Age getAge() {
@@ -44,10 +50,10 @@ public class UserInformation {
         byte[] dataArray = data.toByteArray();
 
         int index = 0;
-        int age = dataArray[index++];
-        int weight = dataArray[index++];
-        int height = dataArray[index++];
-        int nameLength = dataArray[index++];
+        int age = asInt(dataArray[index++]);
+        int weight = asInt(dataArray[index++]);
+        int height = asInt(dataArray[index++]);
+        int nameLength = asInt(dataArray[index++]);
         byte[] name = new byte[nameLength];
         System.arraycopy(dataArray, index, name, 0, nameLength);
 

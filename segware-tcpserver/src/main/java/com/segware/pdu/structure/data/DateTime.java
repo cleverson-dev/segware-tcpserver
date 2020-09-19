@@ -5,6 +5,8 @@ import com.segware.pdu.structure.Data;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+import static com.segware.pdu.PDUUtils.asInt;
+
 public class DateTime {
     public static final int LENGTH = 6;
 
@@ -29,12 +31,12 @@ public class DateTime {
         int index = 0;
         byte[] dataByteArray = data.toByteArray();
 
-        day = new Day(dataByteArray[index++]);
-        month = new Month(dataByteArray[index++]);
-        year = new Year(dataByteArray[index++]);
-        hour = new Hour(dataByteArray[index++]);
-        minute = new Minute(dataByteArray[index++]);
-        second = new Second(dataByteArray[index++]);
+        day = new Day(asInt(dataByteArray[index++]));
+        month = new Month(asInt(dataByteArray[index++]));
+        year = new Year(asInt(dataByteArray[index++]));
+        hour = new Hour(asInt(dataByteArray[index++]));
+        minute = new Minute(asInt(dataByteArray[index++]));
+        second = new Second(asInt(dataByteArray[index++]));
     }
 
     public static DateTime fromData(Data data) {

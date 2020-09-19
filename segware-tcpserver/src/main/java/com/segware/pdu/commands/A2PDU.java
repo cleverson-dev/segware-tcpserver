@@ -4,6 +4,9 @@ import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.structure.Data;
 import com.segware.pdu.structure.Frame;
 import com.segware.pdu.structure.data.UserInformation;
+import com.segware.persistence.entities.A0Response;
+import com.segware.persistence.entities.A1Request;
+import com.segware.persistence.entities.A2Request;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,5 +31,10 @@ public class A2PDU extends ProtocolDataUnit {
         A0PDU a0PDUResponse = new A0PDU();
         session.write(a0PDUResponse);
         minaLogger.info("PDU RESPONSE: " + a0PDUResponse.toString());
+        new A2Request(this, a0PDUResponse).persist();
+    }
+
+    public UserInformation getUserInformation() {
+        return userInformation;
     }
 }

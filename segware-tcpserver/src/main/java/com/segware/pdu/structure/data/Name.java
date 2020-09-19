@@ -26,6 +26,10 @@ public class Name {
         return name.getBytes();
     }
 
+    public String asString() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

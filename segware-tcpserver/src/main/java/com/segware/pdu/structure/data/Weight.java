@@ -13,6 +13,10 @@ public class Weight {
         return (byte) weight;
     }
 
+    public int asInt() {
+        return weight;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

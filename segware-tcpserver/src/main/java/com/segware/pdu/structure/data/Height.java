@@ -13,6 +13,10 @@ public class Height {
         return (byte) height;
     }
 
+    public int asInt() {
+        return height;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

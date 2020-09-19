@@ -3,7 +3,6 @@ package com.segware.pdu.commands;
 import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.structure.Data;
 import com.segware.pdu.structure.Frame;
-import com.segware.persistence.DataSource;
 import com.segware.persistence.entities.A1Request;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;

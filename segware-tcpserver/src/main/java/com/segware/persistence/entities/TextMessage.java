@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="TEXT_MESSAGE")
 public class TextMessage {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TEXT_MESSAGE")
     @SequenceGenerator(name = "SEQ_TEXT_MESSAGE", sequenceName = "SEQ_TEXT_MESSAGE", allocationSize = 1)
@@ -15,7 +14,7 @@ public class TextMessage {
     @Column(name="TEXT_MSG")
     private String textMsg;
 
-    @OneToOne(mappedBy = "a0Response")
+    @OneToOne(mappedBy = "textMessage")
     private A1Request a1Request;
 
     public TextMessage(byte[] textMsg) {

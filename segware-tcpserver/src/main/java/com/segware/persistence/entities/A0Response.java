@@ -28,9 +28,6 @@ public class A0Response {
     @Column(name="END_FIELD")
     private byte end;
 
-    @OneToOne(mappedBy = "textMessage")
-    private A1Request a1Request;
-
     public A0Response(A0PDU a0PDU) {
         init = a0PDU.getInit().toByte();
         bytes = a0PDU.getBytes().toByte();
