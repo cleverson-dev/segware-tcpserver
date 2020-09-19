@@ -22,8 +22,7 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
             decodeEnd(ioBuffer);
 
             ProtocolDataUnit pdu = frame.getPDUInstance(data);
-            // TODO: uncomment
-            //validateCRC8(crc8, pdu.getCrc());
+            validateCRC8(crc8, pdu.getCrc());
 
             protocolDecoderOutput.write(pdu);
 

@@ -80,11 +80,12 @@ public class ServerHandlerTest {
         assertThat(dateTime.getMinute().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
         assertThat(dateTime.getSecond().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
 
+        int expextedBytes = ProtocolDataUnit.FIXED_FIELDS_LENGTH + DateTime.LENGTH;
         assertThat(writtenPdu.getInit(), is(equalTo(Init.getInstance())));
-        assertThat(writtenPdu.getBytes().asInt(), is(equalTo(ProtocolDataUnit.FIXED_FIELDS_LENGTH + DateTime.LENGTH)));
+        assertThat(writtenPdu.getBytes().asInt(), is(equalTo(expextedBytes)));
         assertThat(writtenPdu.getFrame(), is(equalTo(Frame.GET_CURRENT_DATE_TIME)));
         // TODO: Remove cast when the constructor type changes
-        assertThat(writtenPdu.getCrc(), is(equalTo(CRC8.calculate(new Bytes((byte) DateTime.LENGTH),
+        assertThat(writtenPdu.getCrc(), is(equalTo(CRC8.calculateForPDU(new Bytes((byte) expextedBytes),
                 Frame.GET_CURRENT_DATE_TIME, writtenPduData))));
         assertThat(writtenPdu.getEnd(), is(equalTo(End.getInstance())));
     }

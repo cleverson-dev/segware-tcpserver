@@ -13,9 +13,30 @@ public class CRC8 {
         return this.crc;
     }
 
-    //TODO implement CRC8 calculation
-    public static CRC8 calculate(Bytes bytes, Frame frame, Data data) {
-        return new CRC8((byte) 0xDC);
+    public static CRC8 calculateForPDU(Bytes bytes, Frame frame, Data data) {
+        byte[] byteArray = new byte[2 + data.getLength()];
+        byteArray[0] = bytes.toByte();
+        byteArray[1] = frame.toByte();
+        System.arraycopy(data.toByteArray(), 0, byteArray, 2, data.getLength());
+
+        return new CRC8(calculate(byteArray));
+    }
+
+    public static byte calculate(byte[] byteArray) {
+        final byte poly = 0x07;
+        byte crc = 0x00;
+
+        for (byte currByte : byteArray) {
+            crc ^= currByte;
+            for (int i = 0; i < 8; i++) {
+                if ((crc & 0x80) != 0)
+                    crc = (byte)((crc << 1) ^ poly);
+                else
+                    crc <<= 1;
+            }
+        }
+
+        return crc;
     }
 
     @Override
