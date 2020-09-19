@@ -33,6 +33,7 @@
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <junit.platform.version>1.5.2</junit.platform.version>
         <mockito.version>1.10.19</mockito.version>
+        <h2.version>1.4.200</h2.version>
     </properties>
 
     <dependencies>
@@ -82,6 +83,12 @@
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
         </dependency>
 
     </dependencies>
