@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class A0Response {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_A0_RESPONSE")
-    @SequenceGenerator(name = "SEQ_A0_RESPONSE", sequenceName = "SEQ_A0_RESPONSE", allocationSize = 100)
+    @SequenceGenerator(name = "SEQ_A0_RESPONSE", sequenceName = "SEQ_A0_RESPONSE", allocationSize = 1)
     @Column(name="A0_RESPONSE_ID")
     private long a0ResponseId;
 
@@ -27,6 +27,9 @@ public class A0Response {
 
     @Column(name="END_FIELD")
     private byte end;
+
+    @OneToOne(mappedBy = "textMessage")
+    private A1Request a1Request;
 
     public A0Response(A0PDU a0PDU) {
         init = a0PDU.getInit().toByte();

@@ -12,16 +12,16 @@ import javax.persistence.*;
 public class A1Request {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_A1_REQUEST")
-    @SequenceGenerator(name = "SEQ_A1_REQUEST", sequenceName = "SEQ_A1_REQUEST", allocationSize = 100)
+    @SequenceGenerator(name = "SEQ_A1_REQUEST", sequenceName = "SEQ_A1_REQUEST", allocationSize = 1)
     @Column(name="A1_REQUEST_ID")
     private long a1RequestId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "A0_RESPONSE_ID", referencedColumnName = "a0ResponseId")
+    @JoinColumn(name = "A0_RESPONSE_ID")
     private A0Response a0Response;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TEXT_MESSAGE_ID", referencedColumnName = "textMessageId")
+    @JoinColumn(name = "TEXT_MESSAGE_ID")
     private TextMessage textMessage;
 
     @Column(name="INIT_FIELD")
