@@ -1,6 +1,6 @@
 package com.segware.segwaretcpserver.model.command.feld;
 
-import com.segware.segwaretcpserver.segwaretcpserver.model.command.field.CRC8;
+import com.segware.segwaretcpserver.model.command.field.CRC8;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;

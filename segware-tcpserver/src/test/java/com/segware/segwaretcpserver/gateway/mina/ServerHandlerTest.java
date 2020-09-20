@@ -1,9 +1,8 @@
 package com.segware.segwaretcpserver.gateway.mina;
 
-import com.segware.segwaretcpserver.segwaretcpserver.gateway.mina.ServerHandler;
-import com.segware.segwaretcpserver.segwaretcpserver.model.command.*;
-import com.segware.segwaretcpserver.segwaretcpserver.model.command.field.*;
-import com.segware.segwaretcpserver.segwaretcpserver.model.data.*;
+import com.segware.segwaretcpserver.model.command.*;
+import com.segware.segwaretcpserver.model.command.field.*;
+import com.segware.segwaretcpserver.model.data.*;
 import org.apache.mina.core.filterchain.IoFilterChain;
 import org.apache.mina.core.future.CloseFuture;
 import org.apache.mina.core.future.ReadFuture;
