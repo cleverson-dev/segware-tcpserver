@@ -1,7 +1,5 @@
 package com.segware.persistence.entities;
 
-import com.segware.pdu.commands.A0PDU;
-
 import javax.persistence.*;
 
 @Entity
@@ -28,11 +26,11 @@ public class A0Response {
     @Column(name="END_FIELD")
     private byte end;
 
-    public A0Response(A0PDU a0PDU) {
-        init = a0PDU.getInit().toByte();
-        bytes = a0PDU.getBytes().toByte();
-        frame = a0PDU.getFrame().toByte();
-        crc = a0PDU.getCrc().toByte();
-        end = a0PDU.getEnd().toByte();
+    public A0Response(com.segware.pdu.commands.A0Response a0Response) {
+        init = a0Response.getInit().toByte();
+        bytes = a0Response.getBytes().toByte();
+        frame = a0Response.getFrame().toByte();
+        crc = a0Response.getCrc().toByte();
+        end = a0Response.getEnd().toByte();
     }
 }

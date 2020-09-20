@@ -1,9 +1,9 @@
 package com.segware;
 
 import com.segware.pdu.ProtocolDataUnit;
-import com.segware.pdu.commands.A0PDU;
-import com.segware.pdu.commands.A1PDU;
-import com.segware.pdu.commands.A2PDU;
+import com.segware.pdu.commands.A0Response;
+import com.segware.pdu.commands.A1Request;
+import com.segware.pdu.commands.A2Request;
 import com.segware.pdu.commands.A3PDU;
 import com.segware.pdu.structure.*;
 import com.segware.pdu.structure.data.*;
@@ -34,11 +34,11 @@ public class ServerHandlerTest {
     public void shouldReturnAckWhenReceiveTextMsg() {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
-        ProtocolDataUnit pdu_0xA1 = new A1PDU(Data.fromString("Hello world!"));
+        ProtocolDataUnit pdu_0xA1 = new A1Request(Data.fromString("Hello world!"));
 
         serverHandler.messageReceived(ioSession, pdu_0xA1);
 
-        ProtocolDataUnit pdu_0xA0 = new A0PDU();
+        ProtocolDataUnit pdu_0xA0 = new A0Response();
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
         assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
     }
@@ -53,11 +53,11 @@ public class ServerHandlerTest {
         userInformation.setWeight(new Weight(122));
         userInformation.setHeight(new Height(195));
 
-        ProtocolDataUnit pdu_0xA2 = new A2PDU(userInformation);
+        ProtocolDataUnit pdu_0xA2 = new A2Request(userInformation);
 
         serverHandler.messageReceived(ioSession, pdu_0xA2);
 
-        ProtocolDataUnit pdu_0xA0 = new A0PDU();
+        ProtocolDataUnit pdu_0xA0 = new A0Response();
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
         assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
     }

@@ -5,12 +5,12 @@ import com.segware.pdu.structure.Data;
 import com.segware.pdu.structure.Frame;
 import org.apache.mina.core.session.IoSession;
 
-public class A0PDU extends ProtocolDataUnit {
-    public A0PDU() {
+public class A0Response extends ProtocolDataUnit {
+    public A0Response() {
         super(Frame.ACK, new Data(new byte[0]));
     }
 
-    public A0PDU(Data data) {
+    public A0Response(Data data) {
         super(Frame.ACK, data);
     }
 

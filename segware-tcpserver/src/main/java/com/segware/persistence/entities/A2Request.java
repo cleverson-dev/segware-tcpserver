@@ -1,7 +1,6 @@
 package com.segware.persistence.entities;
 
-import com.segware.pdu.commands.A0PDU;
-import com.segware.pdu.commands.A2PDU;
+import com.segware.pdu.commands.A0Response;
 import com.segware.persistence.DataSource;
 
 import javax.persistence.*;
@@ -17,7 +16,7 @@ public class A2Request {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "A0_RESPONSE_ID")
-    private A0Response a0Response;
+    private com.segware.persistence.entities.A0Response a0Response;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_INFORMATION_ID")
@@ -41,16 +40,16 @@ public class A2Request {
     @Column(name="END_FIELD")
     private byte end;
 
-    public A2Request(A2PDU a2PDU, A0PDU a0PDU) {
-        init = a2PDU.getInit().toByte();
-        bytes = a2PDU.getBytes().toByte();
-        frame = a2PDU.getFrame().toByte();
-        data = a2PDU.getData().toByteArray();
-        crc = a2PDU.getCrc().toByte();
-        end = a2PDU.getEnd().toByte();
+    public A2Request(com.segware.pdu.commands.A2Request a2Request, A0Response a0Response) {
+        init = a2Request.getInit().toByte();
+        bytes = a2Request.getBytes().toByte();
+        frame = a2Request.getFrame().toByte();
+        data = a2Request.getData().toByteArray();
+        crc = a2Request.getCrc().toByte();
+        end = a2Request.getEnd().toByte();
 
-        userInformation = new UserInformation(a2PDU.getUserInformation(), this);
-        a0Response = new A0Response(a0PDU);
+        userInformation = new UserInformation(a2Request.getUserInformation(), this);
+        this.a0Response = new com.segware.persistence.entities.A0Response(a0Response);
     }
 
     public void persist() {

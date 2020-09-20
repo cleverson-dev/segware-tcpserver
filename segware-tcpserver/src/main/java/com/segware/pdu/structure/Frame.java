@@ -1,28 +1,28 @@
 package com.segware.pdu.structure;
 
 import com.segware.pdu.ProtocolDataUnit;
-import com.segware.pdu.commands.A0PDU;
-import com.segware.pdu.commands.A1PDU;
-import com.segware.pdu.commands.A2PDU;
+import com.segware.pdu.commands.A0Response;
+import com.segware.pdu.commands.A1Request;
+import com.segware.pdu.commands.A2Request;
 import com.segware.pdu.commands.A3PDU;
 
 public enum Frame {
     ACK((byte) 0xA0) {
         @Override
         public ProtocolDataUnit getPDUInstance(Data data) {
-            return new A0PDU(data);
+            return new A0Response(data);
         }
     },
     TEXT_MESSAGE((byte) 0xA1) {
         @Override
         public ProtocolDataUnit getPDUInstance(Data data) {
-            return new A1PDU(data);
+            return new A1Request(data);
         }
     },
     USER_INFORMATION((byte) 0xA2) {
         @Override
         public ProtocolDataUnit getPDUInstance(Data data) {
-            return new A2PDU(data);
+            return new A2Request(data);
         }
     },
     CURRENT_DATE_TIME((byte) 0xA3) {

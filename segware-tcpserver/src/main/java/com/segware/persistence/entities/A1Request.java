@@ -1,9 +1,7 @@
 package com.segware.persistence.entities;
 
-import com.segware.pdu.commands.A0PDU;
-import com.segware.pdu.commands.A1PDU;
+import com.segware.pdu.commands.A0Response;
 import com.segware.persistence.DataSource;
-import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 
@@ -18,7 +16,7 @@ public class A1Request {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "A0_RESPONSE_ID")
-    private A0Response a0Response;
+    private com.segware.persistence.entities.A0Response a0Response;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TEXT_MESSAGE_ID")
@@ -42,16 +40,16 @@ public class A1Request {
     @Column(name="END_FIELD")
     private byte end;
 
-    public A1Request(A1PDU a1PDU, A0PDU a0PDU) {
-        init = a1PDU.getInit().toByte();
-        bytes = a1PDU.getBytes().toByte();
-        frame = a1PDU.getFrame().toByte();
-        data = a1PDU.getData().toByteArray();
-        crc = a1PDU.getCrc().toByte();
-        end = a1PDU.getEnd().toByte();
+    public A1Request(com.segware.pdu.commands.A1Request a1Request, A0Response a0Response) {
+        init = a1Request.getInit().toByte();
+        bytes = a1Request.getBytes().toByte();
+        frame = a1Request.getFrame().toByte();
+        data = a1Request.getData().toByteArray();
+        crc = a1Request.getCrc().toByte();
+        end = a1Request.getEnd().toByte();
 
         textMessage = new TextMessage(data, this);
-        a0Response = new A0Response(a0PDU);
+        this.a0Response = new com.segware.persistence.entities.A0Response(a0Response);
     }
 
     public void persist() {
