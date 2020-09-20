@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Table(name="CURRENT_DATE_TIME")
 public class CurrentDateTime {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_INFORMATION")
-    @SequenceGenerator(name = "SEQ_USER_INFORMATION", sequenceName = "SEQ_USER_INFORMATION", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CURRENT_DATE_TIME")
+    @SequenceGenerator(name = "SEQ_CURRENT_DATE_TIME", sequenceName = "SEQ_CURRENT_DATE_TIME", allocationSize = 1)
     @Column(name="CURRENT_DATE_TIME_ID")
     private long currentDateTimeId;
 
