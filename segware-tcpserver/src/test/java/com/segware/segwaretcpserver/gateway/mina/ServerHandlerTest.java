@@ -16,6 +16,7 @@ import org.apache.mina.core.session.IoSessionConfig;
 import org.apache.mina.core.write.WriteRequest;
 import org.apache.mina.core.write.WriteRequestQueue;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.net.SocketAddress;
 import java.util.Set;
@@ -31,7 +32,8 @@ public class ServerHandlerTest {
     public void shouldReturnAckWhenReceiveTextMsg() {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
-        ProtocolDataUnit pdu_0xA1 = new A1Request(Data.fromString("Hello world!"));
+        CommandRepository commandRepository = Mockito.mock(CommandRepository.class);
+        ProtocolDataUnit pdu_0xA1 = new A1Request(Data.fromString("Hello world!"), commandRepository);
 
         serverHandler.messageReceived(ioSession, pdu_0xA1);
 
@@ -44,13 +46,14 @@ public class ServerHandlerTest {
     public void shouldReturnAckWhenReceiveUserInf() {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
+        CommandRepository commandRepository = Mockito.mock(CommandRepository.class);
 
         UserInformation userInformation = new UserInformation(new Name("Michel Reips"));
         userInformation.setAge(new Age(32));
         userInformation.setWeight(new Weight(122));
         userInformation.setHeight(new Height(195));
 
-        ProtocolDataUnit pdu_0xA2 = new A2Request(userInformation);
+        ProtocolDataUnit pdu_0xA2 = new A2Request(userInformation, commandRepository);
 
         serverHandler.messageReceived(ioSession, pdu_0xA2);
 
@@ -63,7 +66,8 @@ public class ServerHandlerTest {
     public void shouldReturnDateTimeWhenReceiveDateTimeRequest() {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
-        ProtocolDataUnit requestPDU_0xA3 = new A3Request(new Data("America/Sao_Paulo".getBytes()));
+        CommandRepository commandRepository = Mockito.mock(CommandRepository.class);
+        ProtocolDataUnit requestPDU_0xA3 = new A3Request(new Data("America/Sao_Paulo".getBytes()), commandRepository);
 
         serverHandler.messageReceived(ioSession, requestPDU_0xA3);
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();

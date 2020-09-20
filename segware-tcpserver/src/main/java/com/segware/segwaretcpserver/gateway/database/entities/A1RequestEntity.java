@@ -2,7 +2,7 @@ package com.segware.segwaretcpserver.gateway.database.entities;
 
 import com.segware.segwaretcpserver.model.command.A0Response;
 import com.segware.segwaretcpserver.model.command.A1Request;
-import com.segware.segwaretcpserver.gateway.database.DataSource;
+import com.segware.segwaretcpserver.gateway.database.Database;
 
 import javax.persistence.*;
 
@@ -54,7 +54,7 @@ public class A1RequestEntity {
     }
 
     public void persist() {
-        EntityManager entityManager = DataSource.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = Database.getEntityManagerFactory().createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(this);
         entityManager.getTransaction().commit();

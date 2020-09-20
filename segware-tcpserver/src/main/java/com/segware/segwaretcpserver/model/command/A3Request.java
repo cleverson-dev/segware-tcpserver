@@ -1,6 +1,5 @@
 package com.segware.segwaretcpserver.model.command;
 
-import com.segware.segwaretcpserver.gateway.database.entities.A3RequestEntity;
 import com.segware.segwaretcpserver.model.command.field.Data;
 import com.segware.segwaretcpserver.model.command.field.Frame;
 import com.segware.segwaretcpserver.model.data.DateTime;
@@ -14,25 +13,21 @@ import java.time.ZonedDateTime;
 public class A3Request extends ProtocolDataUnit implements PDURequest {
     private Logger minaLogger = LoggerFactory.getLogger("org.apache.mina");
 
-    private boolean isRequest;
+    private CommandRepository commandRepository;
 
-    public A3Request(Data data) {
+    public A3Request(Data data, CommandRepository commandRepository) {
         super(Frame.CURRENT_DATE_TIME, data);
-        isRequest = true;
+        this.commandRepository = commandRepository;
     }
 
     @Override
     public void execute(IoSession session) {
-        if (isRequest) {
-            ZoneId zoneId = ZoneId.of(new String(this.data.toByteArray()));
-            ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
+        ZoneId zoneId = ZoneId.of(new String(this.data.toByteArray()));
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
 
-            A3Response a3PDUResponse = new A3Response(new DateTime(zonedDateTime));
-            session.write(a3PDUResponse);
-            minaLogger.info("PDU RESPONSE: " + a3PDUResponse.toString());
-            new A3RequestEntity(this, a3PDUResponse).persist();
-        } else {
-            throw new IllegalStateException("Only a request can be executed, not a response.");
-        }
+        A3Response a3Response = new A3Response(new DateTime(zonedDateTime));
+        session.write(a3Response);
+        minaLogger.info("PDU RESPONSE: " + a3Response.toString());
+        commandRepository.persist(this, a3Response);
     }
 }

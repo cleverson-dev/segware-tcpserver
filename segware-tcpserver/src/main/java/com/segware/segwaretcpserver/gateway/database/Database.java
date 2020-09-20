@@ -1,10 +1,9 @@
 package com.segware.segwaretcpserver.gateway.database;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class DataSource {
+public class Database {
     private static final String PERSISTENCE_UNIT_NAME = "PERSISTENCE";
     private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 

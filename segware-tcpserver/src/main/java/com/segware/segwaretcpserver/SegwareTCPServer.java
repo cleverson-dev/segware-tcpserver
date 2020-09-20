@@ -1,6 +1,6 @@
 package com.segware.segwaretcpserver;
 
-import com.segware.segwaretcpserver.gateway.database.DataSource;
+import com.segware.segwaretcpserver.gateway.database.Database;
 import com.segware.segwaretcpserver.gateway.mina.codec.PDUCodecFactory;
 import com.segware.segwaretcpserver.gateway.mina.ServerHandler;
 import org.apache.mina.core.service.IoAcceptor;
@@ -16,7 +16,7 @@ public class SegwareTCPServer {
     private static final int PORT = 5050;
 
     public static void main( String[] args ) throws IOException {
-        DataSource.getEntityManagerFactory();
+        Database.getEntityManagerFactory();
         setupMina();
     }
 

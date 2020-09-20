@@ -1,5 +1,6 @@
 package com.segware.segwaretcpserver.gateway.mina.codec;
 
+import com.segware.segwaretcpserver.gateway.database.CommandRepositoryImpl;
 import com.segware.segwaretcpserver.model.command.ProtocolDataUnit;
 import com.segware.segwaretcpserver.model.command.field.*;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -21,7 +22,7 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
             CRC8 crc8 = decodeCRC(ioBuffer);
             decodeEnd(ioBuffer);
 
-            ProtocolDataUnit pdu = frame.getPDUInstance(data);
+            ProtocolDataUnit pdu = frame.getCommand(data, CommandRepositoryImpl.getInstance());
             validateCRC8(crc8, pdu.getCrc());
 
             protocolDecoderOutput.write(pdu);

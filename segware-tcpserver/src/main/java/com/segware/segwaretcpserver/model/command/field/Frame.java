@@ -1,34 +1,30 @@
 package com.segware.segwaretcpserver.model.command.field;
 
-import com.segware.segwaretcpserver.model.command.ProtocolDataUnit;
-import com.segware.segwaretcpserver.model.command.A0Response;
-import com.segware.segwaretcpserver.model.command.A1Request;
-import com.segware.segwaretcpserver.model.command.A2Request;
-import com.segware.segwaretcpserver.model.command.A3Request;
+import com.segware.segwaretcpserver.model.command.*;
 
 public enum Frame {
     ACK((byte) 0xA0) {
         @Override
-        public ProtocolDataUnit getPDUInstance(Data data) {
+        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
             return new A0Response(data);
         }
     },
     TEXT_MESSAGE((byte) 0xA1) {
         @Override
-        public ProtocolDataUnit getPDUInstance(Data data) {
-            return new A1Request(data);
+        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
+            return new A1Request(data, commandRepository);
         }
     },
     USER_INFORMATION((byte) 0xA2) {
         @Override
-        public ProtocolDataUnit getPDUInstance(Data data) {
-            return new A2Request(data);
+        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
+            return new A2Request(data, commandRepository);
         }
     },
     CURRENT_DATE_TIME((byte) 0xA3) {
         @Override
-        public ProtocolDataUnit getPDUInstance(Data data) {
-            return new A3Request(data);
+        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
+            return new A3Request(data, commandRepository);
         }
     },
     ;
@@ -39,7 +35,7 @@ public enum Frame {
         this.code = code;
     }
 
-    public abstract ProtocolDataUnit getPDUInstance(Data data);
+    public abstract ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository);
 
     public byte toByte() {
         return code;
