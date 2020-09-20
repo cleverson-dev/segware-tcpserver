@@ -4,7 +4,7 @@ import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.commands.A0Response;
 import com.segware.pdu.commands.A1Request;
 import com.segware.pdu.commands.A2Request;
-import com.segware.pdu.commands.A3PDU;
+import com.segware.pdu.commands.A3Request;
 
 public enum Frame {
     ACK((byte) 0xA0) {
@@ -28,7 +28,7 @@ public enum Frame {
     CURRENT_DATE_TIME((byte) 0xA3) {
         @Override
         public ProtocolDataUnit getPDUInstance(Data data) {
-            return A3PDU.getRequestInstance(data);
+            return new A3Request(data);
         }
     },
     ;

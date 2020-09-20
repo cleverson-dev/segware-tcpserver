@@ -1,6 +1,6 @@
 package com.segware;
 
-import com.segware.pdu.ProtocolDataUnit;
+import com.segware.pdu.commands.PDURequest;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ public class ServerHandler extends IoHandlerAdapter {
 
     @Override
     public void messageReceived(IoSession session, Object message) {
-        ProtocolDataUnit pdu = (ProtocolDataUnit) message;
+        PDURequest pdu = (PDURequest) message;
         minaLogger.info("PDU REQUEST: " + pdu.toString());
         pdu.execute(session);
     }

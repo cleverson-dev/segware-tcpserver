@@ -1,6 +1,5 @@
 package com.segware.persistence.entities;
 
-import com.segware.pdu.commands.A3PDU;
 import com.segware.persistence.DataSource;
 
 import javax.persistence.*;
@@ -40,15 +39,15 @@ public class A3Request {
     @Column(name="END_FIELD")
     private byte end;
 
-    public A3Request(A3PDU a3PDURequest, A3PDU a3PDUResponse) {
-        init = a3PDURequest.getInit().toByte();
-        bytes = a3PDURequest.getBytes().toByte();
-        frame = a3PDURequest.getFrame().toByte();
-        data = a3PDURequest.getData().toByteArray();
-        crc = a3PDURequest.getCrc().toByte();
-        end = a3PDURequest.getEnd().toByte();
+    public A3Request(com.segware.pdu.commands.A3Request a3Request, com.segware.pdu.commands.A3Response a3PDUResponse) {
+        init = a3Request.getInit().toByte();
+        bytes = a3Request.getBytes().toByte();
+        frame = a3Request.getFrame().toByte();
+        data = a3Request.getData().toByteArray();
+        crc = a3Request.getCrc().toByte();
+        end = a3Request.getEnd().toByte();
 
-        timeZone = new TimeZone(a3PDURequest.getData().toByteArray(), this);
+        timeZone = new TimeZone(a3Request.getData().toByteArray(), this);
         a3Response = new A3Response(a3PDUResponse, this);
     }
 

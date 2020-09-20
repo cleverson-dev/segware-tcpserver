@@ -1,6 +1,5 @@
 package com.segware.persistence.entities;
 
-import com.segware.pdu.commands.A3PDU;
 import com.segware.persistence.DataSource;
 
 import javax.persistence.*;
@@ -39,7 +38,7 @@ public class A3Response {
     @Column(name="END_FIELD")
     private byte end;
 
-    public A3Response(A3PDU a3PDUResponse, A3Request a3Request) {
+    public A3Response(com.segware.pdu.commands.A3Response a3PDUResponse, A3Request a3Request) {
         init = a3PDUResponse.getInit().toByte();
         bytes = a3PDUResponse.getBytes().toByte();
         frame = a3PDUResponse.getFrame().toByte();

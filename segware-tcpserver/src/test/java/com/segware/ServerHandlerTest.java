@@ -4,7 +4,7 @@ import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.commands.A0Response;
 import com.segware.pdu.commands.A1Request;
 import com.segware.pdu.commands.A2Request;
-import com.segware.pdu.commands.A3PDU;
+import com.segware.pdu.commands.A3Request;
 import com.segware.pdu.structure.*;
 import com.segware.pdu.structure.data.*;
 import org.apache.mina.core.filterchain.IoFilterChain;
@@ -66,7 +66,7 @@ public class ServerHandlerTest {
     public void shouldReturnDateTimeWhenReceiveDateTimeRequest() {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
-        ProtocolDataUnit requestPDU_0xA3 = A3PDU.getRequestInstance(new Data("America/Sao_Paulo".getBytes()));
+        ProtocolDataUnit requestPDU_0xA3 = new A3Request(new Data("America/Sao_Paulo".getBytes()));
 
         serverHandler.messageReceived(ioSession, requestPDU_0xA3);
         ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();

@@ -1,11 +1,10 @@
 package com.segware.pdu;
 
 import com.segware.pdu.structure.*;
-import org.apache.mina.core.session.IoSession;
 
 import java.util.Objects;
 
-public abstract class ProtocolDataUnit {
+public class ProtocolDataUnit {
     public static final int FIXED_FIELDS_LENGTH = 5;
     public static final int HEADER_FIELDS_LENGTH = 3;
 
@@ -24,13 +23,6 @@ public abstract class ProtocolDataUnit {
         this.crc = CRC8.calculateForPDU(bytes, frame, data);
         this.end = End.getInstance();
     }
-
-    private int fillData(byte[] data, byte[] pdu, int index) {
-        System.arraycopy(data, 0, pdu, index, data.length);
-        return index + data.length;
-    }
-
-    public abstract void execute(IoSession session);
 
     public int getLength() {
         return this.bytes.asInt();
