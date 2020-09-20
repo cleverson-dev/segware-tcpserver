@@ -5,25 +5,25 @@ import com.segware.segwaretcpserver.model.command.*;
 public enum Frame {
     ACK((byte) 0xA0) {
         @Override
-        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
+        public Command getCommand(Data data, CommandRepository commandRepository) {
             return new A0Response(data);
         }
     },
     TEXT_MESSAGE((byte) 0xA1) {
         @Override
-        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
+        public Command getCommand(Data data, CommandRepository commandRepository) {
             return new A1Request(data, commandRepository);
         }
     },
     USER_INFORMATION((byte) 0xA2) {
         @Override
-        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
+        public Command getCommand(Data data, CommandRepository commandRepository) {
             return new A2Request(data, commandRepository);
         }
     },
     CURRENT_DATE_TIME((byte) 0xA3) {
         @Override
-        public ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository) {
+        public Command getCommand(Data data, CommandRepository commandRepository) {
             return new A3Request(data, commandRepository);
         }
     },
@@ -35,7 +35,7 @@ public enum Frame {
         this.code = code;
     }
 
-    public abstract ProtocolDataUnit getCommand(Data data, CommandRepository commandRepository);
+    public abstract Command getCommand(Data data, CommandRepository commandRepository);
 
     public byte toByte() {
         return code;

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class A3Request extends ProtocolDataUnit implements PDURequest {
+public class A3Request extends Command implements CommandRequest {
     private Logger minaLogger = LoggerFactory.getLogger("org.apache.mina");
 
     private CommandRepository commandRepository;

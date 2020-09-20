@@ -1,10 +1,10 @@
 package com.segware.segwaretcpserver.model.command.field;
 
-import com.segware.segwaretcpserver.model.command.PDUUtils;
+import com.segware.segwaretcpserver.model.command.CommandUtils;
 
 import java.util.Objects;
 
-import static com.segware.segwaretcpserver.model.command.PDUUtils.canBeCastedToByte;
+import static com.segware.segwaretcpserver.model.command.CommandUtils.canBeCastedToByte;
 
 public class Bytes {
     private byte bytes;
@@ -21,7 +21,7 @@ public class Bytes {
     }
 
     public int asInt() {
-        return PDUUtils.asInt(bytes);
+        return CommandUtils.asInt(bytes);
     }
 
     public byte toByte() {

@@ -4,7 +4,7 @@ import com.segware.segwaretcpserver.model.command.field.Data;
 
 import java.util.Objects;
 
-import static com.segware.segwaretcpserver.model.command.PDUUtils.asInt;
+import static com.segware.segwaretcpserver.model.command.CommandUtils.asInt;
 
 public class UserInformation {
     public static final int FIXED_FIELDS_LENGTH = 4;

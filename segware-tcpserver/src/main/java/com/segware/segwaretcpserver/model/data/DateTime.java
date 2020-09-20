@@ -5,7 +5,7 @@ import com.segware.segwaretcpserver.model.command.field.Data;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-import static com.segware.segwaretcpserver.model.command.PDUUtils.asInt;
+import static com.segware.segwaretcpserver.model.command.CommandUtils.asInt;
 
 public class DateTime {
     public static final int LENGTH = 6;

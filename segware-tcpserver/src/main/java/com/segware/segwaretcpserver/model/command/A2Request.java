@@ -7,7 +7,7 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class A2Request extends ProtocolDataUnit implements PDURequest {
+public class A2Request extends Command implements CommandRequest {
     private Logger minaLogger = LoggerFactory.getLogger("org.apache.mina");
 
     private CommandRepository commandRepository;

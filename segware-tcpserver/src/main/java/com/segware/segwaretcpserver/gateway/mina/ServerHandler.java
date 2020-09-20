@@ -1,6 +1,6 @@
 package com.segware.segwaretcpserver.gateway.mina;
 
-import com.segware.segwaretcpserver.model.command.PDURequest;
+import com.segware.segwaretcpserver.model.command.CommandRequest;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ public class ServerHandler extends IoHandlerAdapter {
 
     @Override
     public void messageReceived(IoSession session, Object message) {
-        PDURequest pdu = (PDURequest) message;
+        CommandRequest pdu = (CommandRequest) message;
         minaLogger.info("PDU REQUEST: " + pdu.toString());
         pdu.execute(session);
     }

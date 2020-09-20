@@ -1,6 +1,6 @@
 package com.segware.segwaretcpserver.model.command;
 
-public class PDUUtils {
+public class CommandUtils {
     public static int asInt(byte b) {
         return b & 0xFF;
     }

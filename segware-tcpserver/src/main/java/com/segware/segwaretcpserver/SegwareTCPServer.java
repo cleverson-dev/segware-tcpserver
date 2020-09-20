@@ -1,7 +1,7 @@
 package com.segware.segwaretcpserver;
 
 import com.segware.segwaretcpserver.gateway.database.Database;
-import com.segware.segwaretcpserver.gateway.mina.codec.PDUCodecFactory;
+import com.segware.segwaretcpserver.gateway.mina.codec.CommandCodecFactory;
 import com.segware.segwaretcpserver.gateway.mina.ServerHandler;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -24,7 +24,7 @@ public class SegwareTCPServer {
         IoAcceptor acceptor = new NioSocketAcceptor();
 
         acceptor.getFilterChain().addLast("logger", new LoggingFilter());
-        acceptor.getFilterChain().addLast("pdu-codec", new ProtocolCodecFilter(new PDUCodecFactory()));
+        acceptor.getFilterChain().addLast("pdu-codec", new ProtocolCodecFilter(new CommandCodecFactory()));
 
         acceptor.setHandler(new ServerHandler());
         acceptor.bind(new InetSocketAddress(PORT));

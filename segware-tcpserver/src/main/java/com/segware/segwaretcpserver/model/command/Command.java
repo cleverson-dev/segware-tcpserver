@@ -4,7 +4,7 @@ import com.segware.segwaretcpserver.model.command.field.*;
 
 import java.util.Objects;
 
-public class ProtocolDataUnit {
+public class Command {
     public static final int FIXED_FIELDS_LENGTH = 5;
     public static final int HEADER_FIELDS_LENGTH = 3;
 
@@ -15,7 +15,7 @@ public class ProtocolDataUnit {
     protected CRC8 crc;
     protected End end;
 
-    protected ProtocolDataUnit(Frame frame, Data data) {
+    protected Command(Frame frame, Data data) {
         this.init = Init.getInstance();
         this.frame = frame;
         this.data = data;
@@ -56,7 +56,7 @@ public class ProtocolDataUnit {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProtocolDataUnit that = (ProtocolDataUnit) o;
+        Command that = (Command) o;
         return Objects.equals(init, that.init) &&
                 Objects.equals(bytes, that.bytes) &&
                 frame == that.frame &&

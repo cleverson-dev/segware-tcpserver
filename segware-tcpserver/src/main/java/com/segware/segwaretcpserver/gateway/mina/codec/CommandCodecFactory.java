@@ -5,13 +5,13 @@ import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 
-public class PDUCodecFactory implements ProtocolCodecFactory {
+public class CommandCodecFactory implements ProtocolCodecFactory {
     private ProtocolEncoder pduEncoder;
     private ProtocolDecoder pduDecoder;
 
-    public PDUCodecFactory() {
-        this.pduEncoder = new PDUEncoder();
-        this.pduDecoder = new PDUDecoder();
+    public CommandCodecFactory() {
+        this.pduEncoder = new CommandEncoder();
+        this.pduDecoder = new CommandDecoder();
     }
 
     public ProtocolEncoder getEncoder(IoSession ioSession) throws Exception {

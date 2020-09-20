@@ -4,7 +4,7 @@ import com.segware.segwaretcpserver.model.command.field.Data;
 import com.segware.segwaretcpserver.model.command.field.Frame;
 import com.segware.segwaretcpserver.model.data.DateTime;
 
-public class A3Response extends ProtocolDataUnit implements PDUResponse {
+public class A3Response extends Command implements CommandResponse {
     private DateTime dateTime;
 
     protected A3Response(DateTime dateTime) {

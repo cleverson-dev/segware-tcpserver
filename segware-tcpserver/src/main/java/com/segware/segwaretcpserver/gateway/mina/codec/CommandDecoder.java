@@ -1,7 +1,7 @@
 package com.segware.segwaretcpserver.gateway.mina.codec;
 
 import com.segware.segwaretcpserver.gateway.database.CommandRepositoryImpl;
-import com.segware.segwaretcpserver.model.command.ProtocolDataUnit;
+import com.segware.segwaretcpserver.model.command.Command;
 import com.segware.segwaretcpserver.model.command.field.*;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -10,11 +10,11 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 import java.io.IOException;
 
-public class PDUDecoder extends CumulativeProtocolDecoder {
+public class CommandDecoder extends CumulativeProtocolDecoder {
     protected boolean doDecode(IoSession ioSession, IoBuffer ioBuffer, ProtocolDecoderOutput protocolDecoderOutput)
             throws Exception {
 
-        if (ioBuffer.remaining() >= ProtocolDataUnit.FIXED_FIELDS_LENGTH) {
+        if (ioBuffer.remaining() >= Command.FIXED_FIELDS_LENGTH) {
             decodeInit(ioBuffer);
             Bytes bytes = decodeBytes(ioBuffer);
             Frame frame = decodeFrame(ioBuffer);
@@ -22,7 +22,7 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
             CRC8 crc8 = decodeCRC(ioBuffer);
             decodeEnd(ioBuffer);
 
-            ProtocolDataUnit pdu = frame.getCommand(data, CommandRepositoryImpl.getInstance());
+            Command pdu = frame.getCommand(data, CommandRepositoryImpl.getInstance());
             validateCRC8(crc8, pdu.getCrc());
 
             protocolDecoderOutput.write(pdu);
@@ -64,11 +64,11 @@ public class PDUDecoder extends CumulativeProtocolDecoder {
     }
 
     private int expectedBufferRemaining(Bytes bytes) {
-        return bytes.asInt() - ProtocolDataUnit.HEADER_FIELDS_LENGTH;
+        return bytes.asInt() - Command.HEADER_FIELDS_LENGTH;
     }
 
     private int expectedDataLength(Bytes bytes) {
-        return bytes.asInt() - ProtocolDataUnit.FIXED_FIELDS_LENGTH;
+        return bytes.asInt() - Command.FIXED_FIELDS_LENGTH;
     }
 
     private CRC8 decodeCRC(IoBuffer ioBuffer) {

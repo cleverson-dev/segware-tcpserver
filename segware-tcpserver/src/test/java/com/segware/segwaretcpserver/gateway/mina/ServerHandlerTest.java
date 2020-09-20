@@ -33,12 +33,12 @@ public class ServerHandlerTest {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
         CommandRepository commandRepository = Mockito.mock(CommandRepository.class);
-        ProtocolDataUnit pdu_0xA1 = new A1Request(Data.fromString("Hello world!"), commandRepository);
+        Command pdu_0xA1 = new A1Request(Data.fromString("Hello world!"), commandRepository);
 
         serverHandler.messageReceived(ioSession, pdu_0xA1);
 
-        ProtocolDataUnit pdu_0xA0 = new A0Response();
-        ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
+        Command pdu_0xA0 = new A0Response();
+        Command writtenPdu = (Command) ioSession.getCurrentWriteMessage();
         assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
     }
 
@@ -53,12 +53,12 @@ public class ServerHandlerTest {
         userInformation.setWeight(new Weight(122));
         userInformation.setHeight(new Height(195));
 
-        ProtocolDataUnit pdu_0xA2 = new A2Request(userInformation, commandRepository);
+        Command pdu_0xA2 = new A2Request(userInformation, commandRepository);
 
         serverHandler.messageReceived(ioSession, pdu_0xA2);
 
-        ProtocolDataUnit pdu_0xA0 = new A0Response();
-        ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
+        Command pdu_0xA0 = new A0Response();
+        Command writtenPdu = (Command) ioSession.getCurrentWriteMessage();
         assertThat(writtenPdu, is(equalTo(pdu_0xA0)));
     }
 
@@ -67,10 +67,10 @@ public class ServerHandlerTest {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
         CommandRepository commandRepository = Mockito.mock(CommandRepository.class);
-        ProtocolDataUnit requestPDU_0xA3 = new A3Request(new Data("America/Sao_Paulo".getBytes()), commandRepository);
+        Command requestPDU_0xA3 = new A3Request(new Data("America/Sao_Paulo".getBytes()), commandRepository);
 
         serverHandler.messageReceived(ioSession, requestPDU_0xA3);
-        ProtocolDataUnit writtenPdu = (ProtocolDataUnit) ioSession.getCurrentWriteMessage();
+        Command writtenPdu = (Command) ioSession.getCurrentWriteMessage();
 
         Data writtenPduData = writtenPdu.getData();
         DateTime dateTime = DateTime.fromData(writtenPduData);
@@ -81,7 +81,7 @@ public class ServerHandlerTest {
         assertThat(dateTime.getMinute().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
         assertThat(dateTime.getSecond().asInt(), is(both(greaterThanOrEqualTo(0)).and(lessThanOrEqualTo(59))));
 
-        int expextedBytes = ProtocolDataUnit.FIXED_FIELDS_LENGTH + DateTime.LENGTH;
+        int expextedBytes = Command.FIXED_FIELDS_LENGTH + DateTime.LENGTH;
         CRC8 expectedCRC = CRC8.calculateForPDU(new Bytes(expextedBytes), Frame.CURRENT_DATE_TIME, writtenPduData);
         assertThat(writtenPdu.getInit(), is(equalTo(Init.getInstance())));
         assertThat(writtenPdu.getBytes().asInt(), is(equalTo(expextedBytes)));
@@ -92,7 +92,7 @@ public class ServerHandlerTest {
 
     private IoSession getMockedIoSession() {
         return new IoSession() {
-            private ProtocolDataUnit pdu;
+            private Command pdu;
 
             public long getId() {
                 return 0;
@@ -127,7 +127,7 @@ public class ServerHandlerTest {
             }
 
             public WriteFuture write(Object o) {
-                this.pdu = (ProtocolDataUnit) o;
+                this.pdu = (Command) o;
                 return null;
             }
 
