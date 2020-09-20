@@ -1,8 +1,8 @@
 package com.segware.segwaretcpserver.gateway.database;
 
-import com.segware.segwaretcpserver.gateway.database.entities.A1RequestEntity;
-import com.segware.segwaretcpserver.gateway.database.entities.A2RequestEntity;
-import com.segware.segwaretcpserver.gateway.database.entities.A3RequestEntity;
+import com.segware.segwaretcpserver.gateway.database.entitiy.A1RequestEntity;
+import com.segware.segwaretcpserver.gateway.database.entitiy.A2RequestEntity;
+import com.segware.segwaretcpserver.gateway.database.entitiy.A3RequestEntity;
 import com.segware.segwaretcpserver.model.command.*;
 
 public class CommandRepositoryImpl implements CommandRepository {

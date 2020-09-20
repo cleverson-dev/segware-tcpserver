@@ -1,4 +1,4 @@
-package com.segware.segwaretcpserver.gateway.database.entities;
+package com.segware.segwaretcpserver.gateway.database.entitiy;
 
 import javax.persistence.*;
 
