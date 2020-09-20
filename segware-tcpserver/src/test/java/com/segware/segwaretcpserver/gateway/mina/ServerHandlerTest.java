@@ -33,7 +33,7 @@ public class ServerHandlerTest {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
         CommandRepository commandRepository = Mockito.mock(CommandRepository.class);
-        Command pdu_0xA1 = new A1Request(Data.fromString("Hello world!"), commandRepository);
+        Command pdu_0xA1 = new A1Request(new TextMessage("Hello world!"), commandRepository);
 
         serverHandler.messageReceived(ioSession, pdu_0xA1);
 
@@ -67,7 +67,7 @@ public class ServerHandlerTest {
         ServerHandler serverHandler = new ServerHandler();
         IoSession ioSession = getMockedIoSession();
         CommandRepository commandRepository = Mockito.mock(CommandRepository.class);
-        Command requestPDU_0xA3 = new A3Request(new Data("America/Sao_Paulo".getBytes()), commandRepository);
+        Command requestPDU_0xA3 = new A3Request(new TimeZone("America/Sao_Paulo"), commandRepository);
 
         serverHandler.messageReceived(ioSession, requestPDU_0xA3);
         Command writtenPdu = (Command) ioSession.getCurrentWriteMessage();
