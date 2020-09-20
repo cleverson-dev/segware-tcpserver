@@ -3,17 +3,37 @@ package com.segware.pdu.structure.data;
 import java.util.Objects;
 
 public class Name {
+    public static final int MAX_LENGTH = 246;
+    private static final String NAME_TO_BIG_MESSAGE = "The informed name is too big.";
+
     private String name;
 
     public Name(String name) {
-        this.name = name;
+        if (isLengthValid(name))
+            this.name = name;
+        else
+            throw new IllegalArgumentException(NAME_TO_BIG_MESSAGE);
     }
 
     public Name(byte[] name) {
-        this.name = new String(name);
+        if (isLengthValid(name))
+            this.name = new String(name);
+        else
+            throw new IllegalArgumentException(NAME_TO_BIG_MESSAGE);
     }
 
-    // TODO: verify lengths handled in bytes for number grater than 127, store int use byte just for pdu
+    private boolean isLengthValid(String name) {
+        return isLengthValid(name.length());
+    }
+
+    private boolean isLengthValid(byte[] name) {
+        return isLengthValid(name.length);
+    }
+
+    private boolean isLengthValid(int length) {
+        return (length >= 0) && (length <= MAX_LENGTH) ? true : false;
+    }
+
     public byte getLengthToByte() {
         return (byte) name.length();
     }

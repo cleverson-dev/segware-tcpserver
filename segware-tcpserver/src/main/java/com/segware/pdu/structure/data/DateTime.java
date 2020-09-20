@@ -20,7 +20,6 @@ public class DateTime {
     public DateTime(ZonedDateTime zonedDateTime) {
         day = new Day(zonedDateTime.getDayOfMonth());
         month = new Month(zonedDateTime.getMonth().getValue());
-        // TODO: Handle number to keep only the two last digits
         year = new Year(zonedDateTime.getYear());
         hour = new Hour(zonedDateTime.getHour());
         minute = new Minute(zonedDateTime.getMinute());

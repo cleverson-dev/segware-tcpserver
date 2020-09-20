@@ -1,22 +1,27 @@
 package com.segware.pdu.structure;
 
+import com.segware.pdu.PDUUtils;
+
 import java.util.Objects;
+
+import static com.segware.pdu.PDUUtils.canBeCastedToByte;
 
 public class Bytes {
     private byte bytes;
 
-    // TODO: constructor always with int to avoid problems with the signal of the type
     public Bytes(byte bytes) {
         this.bytes = bytes;
     }
 
-    public static Bytes fromInt(int pduLength) {
-        return new Bytes((byte) pduLength);
+    public Bytes(int bytes) {
+        if (canBeCastedToByte(bytes))
+            this.bytes = (byte) bytes;
+        else
+            throw new IllegalArgumentException("The informed value can't be casted to int.");
     }
 
-    // TODO: convert numbers grater than 127 to int
     public int asInt() {
-        return bytes;
+        return PDUUtils.asInt(bytes);
     }
 
     public byte toByte() {
