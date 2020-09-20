@@ -48,7 +48,7 @@ public class A3Request {
         crc = a3PDURequest.getCrc().toByte();
         end = a3PDURequest.getEnd().toByte();
 
-        timeZone = new TimeZone(a3PDURequest.getData().toByteArray());
+        timeZone = new TimeZone(a3PDURequest.getData().toByteArray(), this);
         a3Response = new A3Response(a3PDUResponse, this);
     }
 

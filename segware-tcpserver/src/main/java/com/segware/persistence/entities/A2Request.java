@@ -49,7 +49,7 @@ public class A2Request {
         crc = a2PDU.getCrc().toByte();
         end = a2PDU.getEnd().toByte();
 
-        userInformation = new UserInformation(a2PDU.getUserInformation());
+        userInformation = new UserInformation(a2PDU.getUserInformation(), this);
         a0Response = new A0Response(a0PDU);
     }
 

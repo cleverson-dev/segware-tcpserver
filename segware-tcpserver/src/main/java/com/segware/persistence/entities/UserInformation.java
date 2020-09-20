@@ -26,10 +26,12 @@ public class UserInformation {
     @OneToOne(mappedBy = "userInformation")
     private A2Request a2Request;
 
-    public UserInformation(com.segware.pdu.structure.data.UserInformation userInformation) {
+    public UserInformation(com.segware.pdu.structure.data.UserInformation userInformation, A2Request a2Request) {
         age = userInformation.getAge().asInt();
         weight = userInformation.getWeight().asInt();
         height = userInformation.getHeight().asInt();
         name = userInformation.getName().asString();
+
+        this.a2Request = a2Request;
     }
 }

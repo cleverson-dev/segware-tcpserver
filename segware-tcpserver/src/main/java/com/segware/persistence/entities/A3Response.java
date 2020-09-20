@@ -47,7 +47,7 @@ public class A3Response {
         crc = a3PDUResponse.getCrc().toByte();
         end = a3PDUResponse.getEnd().toByte();
 
-        currentDateTime = new CurrentDateTime(a3PDUResponse.getDateTime());
+        currentDateTime = new CurrentDateTime(a3PDUResponse.getDateTime(), this);
         this.a3Request = a3Request;
     }
 

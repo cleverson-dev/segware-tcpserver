@@ -34,12 +34,14 @@ public class CurrentDateTime {
     @OneToOne(mappedBy = "currentDateTime")
     private A3Response a3Response;
 
-    public CurrentDateTime(DateTime dateTime) {
+    public CurrentDateTime(DateTime dateTime, A3Response a3Response) {
         day = dateTime.getDay().asInt();
         month = dateTime.getMonth().asInt();
         year = dateTime.getYear().asInt();
         hour = dateTime.getHour().asInt();
         minute = dateTime.getMinute().asInt();
         second = dateTime.getSecond().asInt();
+
+        this.a3Response = a3Response;
     }
 }

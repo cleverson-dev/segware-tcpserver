@@ -17,7 +17,8 @@ public class TimeZone {
     @OneToOne(mappedBy = "timeZone")
     private A3Request a3Request;
 
-    public TimeZone(byte[] textMsg) {
+    public TimeZone(byte[] textMsg, A3Request a3Request) {
         this.zoneName = new String(textMsg);
+        this.a3Request = a3Request;
     }
 }

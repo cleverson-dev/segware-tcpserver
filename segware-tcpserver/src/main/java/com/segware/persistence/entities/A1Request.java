@@ -50,7 +50,7 @@ public class A1Request {
         crc = a1PDU.getCrc().toByte();
         end = a1PDU.getEnd().toByte();
 
-        textMessage = new TextMessage(data);
+        textMessage = new TextMessage(data, this);
         a0Response = new A0Response(a0PDU);
     }
 

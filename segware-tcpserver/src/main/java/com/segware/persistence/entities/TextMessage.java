@@ -17,7 +17,8 @@ public class TextMessage {
     @OneToOne(mappedBy = "textMessage")
     private A1Request a1Request;
 
-    public TextMessage(byte[] textMsg) {
+    public TextMessage(byte[] textMsg, A1Request a1Request) {
         this.textMsg = new String(textMsg);
+        this.a1Request = a1Request;
     }
 }
