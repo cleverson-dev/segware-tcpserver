@@ -49,7 +49,7 @@ public class A3RequestEntity {
         crc = a3Request.getCrc().toByte();
         end = a3Request.getEnd().toByte();
 
-        timeZoneEntity = new TimeZoneEntity(a3Request.getData().toByteArray(), this);
+        timeZoneEntity = new TimeZoneEntity(a3Request.getTimeZone(), this);
         a3ResponseEntity = new A3ResponseEntity(a3Response, this);
     }
 

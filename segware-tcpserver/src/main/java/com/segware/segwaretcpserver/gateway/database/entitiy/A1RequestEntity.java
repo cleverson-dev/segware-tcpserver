@@ -49,7 +49,7 @@ public class A1RequestEntity {
         crc = a1Request.getCrc().toByte();
         end = a1Request.getEnd().toByte();
 
-        textMessageEntity = new TextMessageEntity(data, this);
+        textMessageEntity = new TextMessageEntity(a1Request.getTextMessage(), this);
         this.a0ResponseEntity = new A0ResponseEntity(a0Response);
     }
 

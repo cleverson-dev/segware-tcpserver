@@ -1,5 +1,7 @@
 package com.segware.segwaretcpserver.gateway.database.entitiy;
 
+import com.segware.segwaretcpserver.model.data.TimeZone;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,8 +19,8 @@ public class TimeZoneEntity {
     @OneToOne(mappedBy = "timeZoneEntity")
     private A3RequestEntity a3RequestEntity;
 
-    public TimeZoneEntity(byte[] textMsg, A3RequestEntity a3RequestEntity) {
-        this.zoneName = new String(textMsg);
+    public TimeZoneEntity(TimeZone timeZone, A3RequestEntity a3RequestEntity) {
+        this.zoneName = timeZone.getTimeZone();
         this.a3RequestEntity = a3RequestEntity;
     }
 }

@@ -10,5 +10,7 @@ public class A0Response extends Command implements CommandResponse {
 
     public A0Response(Data data) {
         super(Frame.ACK, data);
+        if (data.getLength() != 0)
+            throw new IllegalArgumentException("A0 command cannot have a data field.");
     }
 }

@@ -38,4 +38,8 @@ public class A3Request extends Command implements CommandRequest {
         minaLogger.info("PDU RESPONSE: " + a3Response.toString());
         commandRepository.persist(this, a3Response);
     }
+
+    public TimeZone getTimeZone() {
+        return timeZone;
+    }
 }

@@ -32,4 +32,8 @@ public class A1Request extends Command implements CommandRequest {
         minaLogger.info("PDU RESPONSE: " + a0Response.toString());
         commandRepository.persist(this, a0Response);
     }
+
+    public TextMessage getTextMessage() {
+        return textMessage;
+    }
 }
