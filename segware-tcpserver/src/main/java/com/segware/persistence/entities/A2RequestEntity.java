@@ -1,13 +1,14 @@
 package com.segware.persistence.entities;
 
 import com.segware.pdu.commands.A0Response;
+import com.segware.pdu.commands.A2Request;
 import com.segware.persistence.DataSource;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="A2_REQUEST")
-public class A2Request {
+public class A2RequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_A2_REQUEST")
     @SequenceGenerator(name = "SEQ_A2_REQUEST", sequenceName = "SEQ_A2_REQUEST", allocationSize = 1)
@@ -16,11 +17,11 @@ public class A2Request {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "A0_RESPONSE_ID")
-    private com.segware.persistence.entities.A0Response a0Response;
+    private A0ResponseEntity a0ResponseEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_INFORMATION_ID")
-    private UserInformation userInformation;
+    private UserInformationEntity userInformationEntity;
 
     @Column(name="INIT_FIELD")
     private byte init;
@@ -40,7 +41,7 @@ public class A2Request {
     @Column(name="END_FIELD")
     private byte end;
 
-    public A2Request(com.segware.pdu.commands.A2Request a2Request, A0Response a0Response) {
+    public A2RequestEntity(A2Request a2Request, A0Response a0Response) {
         init = a2Request.getInit().toByte();
         bytes = a2Request.getBytes().toByte();
         frame = a2Request.getFrame().toByte();
@@ -48,8 +49,8 @@ public class A2Request {
         crc = a2Request.getCrc().toByte();
         end = a2Request.getEnd().toByte();
 
-        userInformation = new UserInformation(a2Request.getUserInformation(), this);
-        this.a0Response = new com.segware.persistence.entities.A0Response(a0Response);
+        userInformationEntity = new UserInformationEntity(a2Request.getUserInformation(), this);
+        this.a0ResponseEntity = new A0ResponseEntity(a0Response);
     }
 
     public void persist() {

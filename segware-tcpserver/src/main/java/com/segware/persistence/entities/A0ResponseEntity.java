@@ -1,10 +1,12 @@
 package com.segware.persistence.entities;
 
+import com.segware.pdu.commands.A0Response;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="A0_RESPONSE")
-public class A0Response {
+public class A0ResponseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_A0_RESPONSE")
     @SequenceGenerator(name = "SEQ_A0_RESPONSE", sequenceName = "SEQ_A0_RESPONSE", allocationSize = 1)
@@ -26,7 +28,7 @@ public class A0Response {
     @Column(name="END_FIELD")
     private byte end;
 
-    public A0Response(com.segware.pdu.commands.A0Response a0Response) {
+    public A0ResponseEntity(A0Response a0Response) {
         init = a0Response.getInit().toByte();
         bytes = a0Response.getBytes().toByte();
         frame = a0Response.getFrame().toByte();

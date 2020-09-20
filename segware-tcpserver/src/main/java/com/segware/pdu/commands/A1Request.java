@@ -3,6 +3,7 @@ package com.segware.pdu.commands;
 import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.structure.Data;
 import com.segware.pdu.structure.Frame;
+import com.segware.persistence.entities.A1RequestEntity;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,6 @@ public class A1Request extends ProtocolDataUnit implements PDURequest {
         A0Response a0Response = new A0Response();
         session.write(a0Response);
         minaLogger.info("PDU RESPONSE: " + a0Response.toString());
-        new com.segware.persistence.entities.A1Request(this, a0Response).persist();
+        new A1RequestEntity(this, a0Response).persist();
     }
 }

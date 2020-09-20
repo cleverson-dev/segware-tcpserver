@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="TIME_ZONE")
-public class TimeZone {
+public class TimeZoneEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TIME_ZONE")
     @SequenceGenerator(name = "SEQ_TIME_ZONE", sequenceName = "SEQ_TIME_ZONE", allocationSize = 1)
@@ -14,11 +14,11 @@ public class TimeZone {
     @Column(name="ZONE_NAME")
     private String zoneName;
 
-    @OneToOne(mappedBy = "timeZone")
-    private A3Request a3Request;
+    @OneToOne(mappedBy = "timeZoneEntity")
+    private A3RequestEntity a3RequestEntity;
 
-    public TimeZone(byte[] textMsg, A3Request a3Request) {
+    public TimeZoneEntity(byte[] textMsg, A3RequestEntity a3RequestEntity) {
         this.zoneName = new String(textMsg);
-        this.a3Request = a3Request;
+        this.a3RequestEntity = a3RequestEntity;
     }
 }

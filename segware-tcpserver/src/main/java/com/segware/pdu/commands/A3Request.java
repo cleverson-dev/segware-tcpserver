@@ -4,6 +4,7 @@ import com.segware.pdu.ProtocolDataUnit;
 import com.segware.pdu.structure.Data;
 import com.segware.pdu.structure.Frame;
 import com.segware.pdu.structure.data.DateTime;
+import com.segware.persistence.entities.A3RequestEntity;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class A3Request extends ProtocolDataUnit implements PDURequest {
             A3Response a3PDUResponse = new A3Response(new DateTime(zonedDateTime));
             session.write(a3PDUResponse);
             minaLogger.info("PDU RESPONSE: " + a3PDUResponse.toString());
-            new com.segware.persistence.entities.A3Request(this, a3PDUResponse).persist();
+            new A3RequestEntity(this, a3PDUResponse).persist();
         } else {
             throw new IllegalStateException("Only a request can be executed, not a response.");
         }

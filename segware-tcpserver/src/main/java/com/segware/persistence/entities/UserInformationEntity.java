@@ -1,10 +1,12 @@
 package com.segware.persistence.entities;
 
+import com.segware.pdu.structure.data.UserInformation;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="USER_INFORMATION")
-public class UserInformation {
+public class UserInformationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_INFORMATION")
     @SequenceGenerator(name = "SEQ_USER_INFORMATION", sequenceName = "SEQ_USER_INFORMATION", allocationSize = 1)
@@ -23,15 +25,15 @@ public class UserInformation {
     @Column(name="NAME")
     private String name;
 
-    @OneToOne(mappedBy = "userInformation")
-    private A2Request a2Request;
+    @OneToOne(mappedBy = "userInformationEntity")
+    private A2RequestEntity a2RequestEntity;
 
-    public UserInformation(com.segware.pdu.structure.data.UserInformation userInformation, A2Request a2Request) {
+    public UserInformationEntity(UserInformation userInformation, A2RequestEntity a2RequestEntity) {
         age = userInformation.getAge().asInt();
         weight = userInformation.getWeight().asInt();
         height = userInformation.getHeight().asInt();
         name = userInformation.getName().asString();
 
-        this.a2Request = a2Request;
+        this.a2RequestEntity = a2RequestEntity;
     }
 }

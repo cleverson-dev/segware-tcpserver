@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="TEXT_MESSAGE")
-public class TextMessage {
+public class TextMessageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TEXT_MESSAGE")
     @SequenceGenerator(name = "SEQ_TEXT_MESSAGE", sequenceName = "SEQ_TEXT_MESSAGE", allocationSize = 1)
@@ -14,11 +14,11 @@ public class TextMessage {
     @Column(name="TEXT_MSG")
     private String textMsg;
 
-    @OneToOne(mappedBy = "textMessage")
-    private A1Request a1Request;
+    @OneToOne(mappedBy = "textMessageEntity")
+    private A1RequestEntity a1RequestEntity;
 
-    public TextMessage(byte[] textMsg, A1Request a1Request) {
+    public TextMessageEntity(byte[] textMsg, A1RequestEntity a1RequestEntity) {
         this.textMsg = new String(textMsg);
-        this.a1Request = a1Request;
+        this.a1RequestEntity = a1RequestEntity;
     }
 }
