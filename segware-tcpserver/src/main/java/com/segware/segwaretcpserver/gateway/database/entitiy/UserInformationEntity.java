@@ -3,6 +3,7 @@ package com.segware.segwaretcpserver.gateway.database.entitiy;
 import com.segware.segwaretcpserver.model.data.UserInformation;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="USER_INFORMATION")
@@ -35,5 +36,35 @@ public class UserInformationEntity {
         name = userInformation.getName().asString();
 
         this.a2RequestEntity = a2RequestEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserInformationEntity that = (UserInformationEntity) o;
+        return userInformationId == that.userInformationId &&
+                age == that.age &&
+                weight == that.weight &&
+                height == that.height &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(a2RequestEntity, that.a2RequestEntity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userInformationId, age, weight, height, name, a2RequestEntity);
+    }
+
+    @Override
+    public String toString() {
+        return "UserInformationEntity{" +
+                "userInformationId=" + userInformationId +
+                ", age=" + age +
+                ", weight=" + weight +
+                ", height=" + height +
+                ", name='" + name + '\'' +
+                ", a2RequestEntity=" + a2RequestEntity +
+                '}';
     }
 }

@@ -4,6 +4,7 @@ import com.segware.segwaretcpserver.model.command.A0Response;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name="A0_RESPONSE")
@@ -40,5 +41,37 @@ public class A0ResponseEntity {
         end = a0Response.getEnd().toByte();
 
         receptionTime = a0Response.getReceptionTime();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        A0ResponseEntity that = (A0ResponseEntity) o;
+        return a0ResponseId == that.a0ResponseId &&
+                init == that.init &&
+                bytes == that.bytes &&
+                frame == that.frame &&
+                crc == that.crc &&
+                end == that.end &&
+                Objects.equals(receptionTime, that.receptionTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(a0ResponseId, init, bytes, frame, crc, end, receptionTime);
+    }
+
+    @Override
+    public String toString() {
+        return "A0ResponseEntity{" +
+                "a0ResponseId=" + a0ResponseId +
+                ", init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
     }
 }

@@ -6,6 +6,8 @@ import com.segware.segwaretcpserver.gateway.database.Database;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Objects;
 
 @Entity
 @Table(name="A3_REQUEST")
@@ -65,5 +67,45 @@ public class A3RequestEntity {
         entityManager.persist(this);
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        A3RequestEntity that = (A3RequestEntity) o;
+        return a3RequestId == that.a3RequestId &&
+                init == that.init &&
+                bytes == that.bytes &&
+                frame == that.frame &&
+                crc == that.crc &&
+                end == that.end &&
+                Objects.equals(a3ResponseEntity, that.a3ResponseEntity) &&
+                Objects.equals(timeZoneEntity, that.timeZoneEntity) &&
+                Arrays.equals(data, that.data) &&
+                Objects.equals(receptionTime, that.receptionTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(a3RequestId, a3ResponseEntity, timeZoneEntity, init, bytes, frame, crc, end, receptionTime);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "A3RequestEntity{" +
+                "a3RequestId=" + a3RequestId +
+                ", a3ResponseEntity=" + a3ResponseEntity +
+                ", timeZoneEntity=" + timeZoneEntity +
+                ", init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + Arrays.toString(data) +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
     }
 }

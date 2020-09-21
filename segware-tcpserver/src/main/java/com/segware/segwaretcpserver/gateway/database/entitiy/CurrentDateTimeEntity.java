@@ -3,6 +3,7 @@ package com.segware.segwaretcpserver.gateway.database.entitiy;
 import com.segware.segwaretcpserver.model.data.DateTime;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="CURRENT_DATE_TIME")
@@ -43,5 +44,39 @@ public class CurrentDateTimeEntity {
         second = dateTime.getSecond().asInt();
 
         this.a3ResponseEntity = a3ResponseEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CurrentDateTimeEntity that = (CurrentDateTimeEntity) o;
+        return currentDateTimeId == that.currentDateTimeId &&
+                day == that.day &&
+                month == that.month &&
+                year == that.year &&
+                hour == that.hour &&
+                minute == that.minute &&
+                second == that.second &&
+                Objects.equals(a3ResponseEntity, that.a3ResponseEntity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentDateTimeId, day, month, year, hour, minute, second, a3ResponseEntity);
+    }
+
+    @Override
+    public String toString() {
+        return "CurrentDateTimeEntity{" +
+                "currentDateTimeId=" + currentDateTimeId +
+                ", day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                ", hour=" + hour +
+                ", minute=" + minute +
+                ", second=" + second +
+                ", a3ResponseEntity=" + a3ResponseEntity +
+                '}';
     }
 }

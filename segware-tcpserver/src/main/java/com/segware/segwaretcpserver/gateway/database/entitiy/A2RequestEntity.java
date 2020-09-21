@@ -6,6 +6,8 @@ import com.segware.segwaretcpserver.gateway.database.Database;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Objects;
 
 @Entity
 @Table(name="A2_REQUEST")
@@ -65,5 +67,45 @@ public class A2RequestEntity {
         entityManager.persist(this);
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        A2RequestEntity that = (A2RequestEntity) o;
+        return a2RequestId == that.a2RequestId &&
+                init == that.init &&
+                bytes == that.bytes &&
+                frame == that.frame &&
+                crc == that.crc &&
+                end == that.end &&
+                Objects.equals(a0ResponseEntity, that.a0ResponseEntity) &&
+                Objects.equals(userInformationEntity, that.userInformationEntity) &&
+                Arrays.equals(data, that.data) &&
+                Objects.equals(receptionTime, that.receptionTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(a2RequestId, a0ResponseEntity, userInformationEntity, init, bytes, frame, crc, end, receptionTime);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "A2RequestEntity{" +
+                "a2RequestId=" + a2RequestId +
+                ", a0ResponseEntity=" + a0ResponseEntity +
+                ", userInformationEntity=" + userInformationEntity +
+                ", init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + Arrays.toString(data) +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
     }
 }

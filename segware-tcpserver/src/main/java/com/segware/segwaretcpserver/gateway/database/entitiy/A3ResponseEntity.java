@@ -4,6 +4,8 @@ import com.segware.segwaretcpserver.model.command.A3Response;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Objects;
 
 @Entity
 @Table(name="A3_RESPONSE")
@@ -54,5 +56,45 @@ public class A3ResponseEntity {
 
         currentDateTimeEntity = new CurrentDateTimeEntity(a3Response.getDateTime(), this);
         this.a3RequestEntity = a3RequestEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        A3ResponseEntity that = (A3ResponseEntity) o;
+        return a3ResponseId == that.a3ResponseId &&
+                init == that.init &&
+                bytes == that.bytes &&
+                frame == that.frame &&
+                crc == that.crc &&
+                end == that.end &&
+                Objects.equals(a3RequestEntity, that.a3RequestEntity) &&
+                Objects.equals(currentDateTimeEntity, that.currentDateTimeEntity) &&
+                Arrays.equals(data, that.data) &&
+                Objects.equals(receptionTime, that.receptionTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(a3ResponseId, a3RequestEntity, currentDateTimeEntity, init, bytes, frame, crc, end, receptionTime);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "A3ResponseEntity{" +
+                "a3ResponseId=" + a3ResponseId +
+                ", a3RequestEntity=" + a3RequestEntity +
+                ", currentDateTimeEntity=" + currentDateTimeEntity +
+                ", init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + Arrays.toString(data) +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
     }
 }
