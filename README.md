@@ -45,7 +45,11 @@ Além disso, utilizou-se amplamente de princípios [DDD]. Isto explica, por exem
 
 ## Execução
 
-O Segware TCP-Server utiliza uma base de dados H2 em modo Embedded. Portanto, não é necessária a sua criação. O Hibernate é capaz de criar o schema da base a partir do ERM mapping, porém o schema DDL é forncecido ainda assim, e pode ser encontrado na pasta `src\main\resources\message-db.sql`. Um ER-Diagram criado no [draw.io](https://app.diagrams.net/) está disponível na raiz do repositório com o nome `MessageDB ER-Diagram.drawio`, e pode ser um bom ponto de partida para se entender melhor a estrutura do projeto. Por fim, uma base [Packet Sender](https://packetsender.com/) para testes está disponível na raiz do repositório com o nome `packetsender_export.ini`.
+O Segware TCP-Server utiliza uma base de dados H2 em modo Embedded. Portanto, não é necessária a sua criação. O Hibernate é capaz de criar o schema da base a partir do ERM mapping. Apenas se atente ao fato de que os campos binários de tamanho 1 não serão criados com o tipo BINARY(1), o que irá fazer com que os valores acima de 127 se tornem negativos. Uma vez que, o tipo byte é signed e codificado em two's complement notation.
+
+Por esse motivo o schema DDL é forncecido, e pode ser encontrado na pasta `src\main\resources\message-db.sql`. Um ER-Diagram criado no [draw.io](https://app.diagrams.net/) está disponível na raiz do repositório com o nome `MessageDB ER-Diagram.drawio`, e pode ser um bom ponto de partida para se entender melhor a estrutura do projeto. Uma forma simples de criar a base é usar o `h2-1.4.200.jar` da sua pasta `.m2` para se conectar em modo embedded à base, executar os DDLs, desconectar, e só então iniciar a aplicação.
+
+Por fim, uma base [Packet Sender](https://packetsender.com/) para testes está disponível na raiz do repositório com o nome `packetsender_export.ini`.
 
 Para executar a aplicação utilize os camandos abaixo:
 ```sh
