@@ -42,4 +42,18 @@ public class A3Request extends Command implements CommandRequest {
     public TimeZone getTimeZone() {
         return timeZone;
     }
+
+    @Override
+    public String toString() {
+        return "A3Request{" +
+                "init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + data +
+                ", timeZone=" + timeZone +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
+    }
 }

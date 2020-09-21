@@ -36,4 +36,18 @@ public class A1Request extends Command implements CommandRequest {
     public TextMessage getTextMessage() {
         return textMessage;
     }
+
+    @Override
+    public String toString() {
+        return "A1Request{" +
+                "init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + data +
+                ", textMessage=" + textMessage +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
+    }
 }

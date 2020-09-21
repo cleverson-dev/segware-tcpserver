@@ -15,4 +15,18 @@ public class A3Response extends Command implements CommandResponse {
     public DateTime getDateTime() {
         return dateTime;
     }
+
+    @Override
+    public String toString() {
+        return "A3Response{" +
+                "init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + data +
+                ", dateTime=" + dateTime +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
+    }
 }

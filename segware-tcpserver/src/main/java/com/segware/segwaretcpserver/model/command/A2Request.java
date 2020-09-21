@@ -36,4 +36,18 @@ public class A2Request extends Command implements CommandRequest {
     public UserInformation getUserInformation() {
         return userInformation;
     }
+
+    @Override
+    public String toString() {
+        return "A2Request{" +
+                "init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + data +
+                ", userInformation=" + userInformation +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
+    }
 }

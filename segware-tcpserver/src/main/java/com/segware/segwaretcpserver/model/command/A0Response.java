@@ -13,4 +13,17 @@ public class A0Response extends Command implements CommandResponse {
         if (data.getLength() != 0)
             throw new IllegalArgumentException("A0 command cannot have a data field.");
     }
+
+    @Override
+    public String toString() {
+        return "A0Response{" +
+                "init=" + init +
+                ", bytes=" + bytes +
+                ", frame=" + frame +
+                ", data=" + data +
+                ", crc=" + crc +
+                ", end=" + end +
+                ", receptionTime=" + receptionTime +
+                '}';
+    }
 }

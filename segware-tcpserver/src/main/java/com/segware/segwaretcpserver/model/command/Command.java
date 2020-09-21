@@ -81,13 +81,14 @@ public class Command {
 
     @Override
     public String toString() {
-        return "ProtocolDataUnit{" +
+        return "Command{" +
                 "init=" + init +
                 ", bytes=" + bytes +
                 ", frame=" + frame +
                 ", data=" + data +
                 ", crc=" + crc +
                 ", end=" + end +
+                ", receptionTime=" + receptionTime +
                 '}';
     }
 }
