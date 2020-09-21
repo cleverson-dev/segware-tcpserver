@@ -20,6 +20,7 @@ public class A3Request extends Command implements CommandRequest {
     public A3Request(TimeZone timeZone, CommandRepository commandRepository) {
         super(Frame.CURRENT_DATE_TIME, new Data(timeZone.toByteArray()));
         this.commandRepository = commandRepository;
+        this.timeZone = timeZone;
     }
 
     public A3Request(Data data, CommandRepository commandRepository) {
