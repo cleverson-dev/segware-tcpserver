@@ -2,6 +2,7 @@ package com.segware.segwaretcpserver.model.command;
 
 import com.segware.segwaretcpserver.model.command.field.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Command {
@@ -15,6 +16,8 @@ public class Command {
     protected CRC8 crc;
     protected End end;
 
+    protected LocalDateTime receptionTime;
+
     protected Command(Frame frame, Data data) {
         this.init = Init.getInstance();
         this.frame = frame;
@@ -22,6 +25,8 @@ public class Command {
         this.bytes = new Bytes(FIXED_FIELDS_LENGTH + data.getLength());
         this.crc = CRC8.calculateForPDU(bytes, frame, data);
         this.end = End.getInstance();
+
+        this.receptionTime = LocalDateTime.now();
     }
 
     public int getLength() {
@@ -50,6 +55,10 @@ public class Command {
 
     public End getEnd() {
         return end;
+    }
+
+    public LocalDateTime getReceptionTime() {
+        return receptionTime;
     }
 
     @Override

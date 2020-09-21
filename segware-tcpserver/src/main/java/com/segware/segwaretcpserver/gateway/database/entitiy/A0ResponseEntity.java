@@ -3,6 +3,7 @@ package com.segware.segwaretcpserver.gateway.database.entitiy;
 import com.segware.segwaretcpserver.model.command.A0Response;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="A0_RESPONSE")
@@ -28,11 +29,16 @@ public class A0ResponseEntity {
     @Column(name="END_FIELD")
     private byte end;
 
+    @Column(name="RECEPTION_TIME")
+    private LocalDateTime receptionTime;
+
     public A0ResponseEntity(A0Response a0Response) {
         init = a0Response.getInit().toByte();
         bytes = a0Response.getBytes().toByte();
         frame = a0Response.getFrame().toByte();
         crc = a0Response.getCrc().toByte();
         end = a0Response.getEnd().toByte();
+
+        receptionTime = a0Response.getReceptionTime();
     }
 }

@@ -3,6 +3,7 @@ package com.segware.segwaretcpserver.gateway.database.entitiy;
 import com.segware.segwaretcpserver.model.command.A3Response;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="A3_RESPONSE")
@@ -38,6 +39,9 @@ public class A3ResponseEntity {
     @Column(name="END_FIELD")
     private byte end;
 
+    @Column(name="RECEPTION_TIME")
+    private LocalDateTime receptionTime;
+
     public A3ResponseEntity(A3Response a3Response, A3RequestEntity a3RequestEntity) {
         init = a3Response.getInit().toByte();
         bytes = a3Response.getBytes().toByte();
@@ -45,6 +49,8 @@ public class A3ResponseEntity {
         data = a3Response.getData().toByteArray();
         crc = a3Response.getCrc().toByte();
         end = a3Response.getEnd().toByte();
+
+        receptionTime = a3Response.getReceptionTime();
 
         currentDateTimeEntity = new CurrentDateTimeEntity(a3Response.getDateTime(), this);
         this.a3RequestEntity = a3RequestEntity;

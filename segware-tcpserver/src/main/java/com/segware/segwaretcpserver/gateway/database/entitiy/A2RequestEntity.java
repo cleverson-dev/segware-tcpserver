@@ -5,6 +5,7 @@ import com.segware.segwaretcpserver.model.command.A2Request;
 import com.segware.segwaretcpserver.gateway.database.Database;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="A2_REQUEST")
@@ -41,6 +42,9 @@ public class A2RequestEntity {
     @Column(name="END_FIELD")
     private byte end;
 
+    @Column(name="RECEPTION_TIME")
+    private LocalDateTime receptionTime;
+
     public A2RequestEntity(A2Request a2Request, A0Response a0Response) {
         init = a2Request.getInit().toByte();
         bytes = a2Request.getBytes().toByte();
@@ -48,6 +52,8 @@ public class A2RequestEntity {
         data = a2Request.getData().toByteArray();
         crc = a2Request.getCrc().toByte();
         end = a2Request.getEnd().toByte();
+
+        receptionTime = a2Request.getReceptionTime();
 
         userInformationEntity = new UserInformationEntity(a2Request.getUserInformation(), this);
         this.a0ResponseEntity = new A0ResponseEntity(a0Response);
